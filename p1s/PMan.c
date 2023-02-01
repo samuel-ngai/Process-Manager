@@ -62,10 +62,6 @@ void printList() {
 	 * the given actions.
 	 */
 void inputHandler() {
-    char *prompt  = "PMan: >";
-    char *input;
-    int AssigneePID = 1;
-    //input = readline(prompt);
 
     char* myCommand = readline("PMan: >");
 
