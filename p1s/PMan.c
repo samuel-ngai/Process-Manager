@@ -104,12 +104,26 @@ void removeNode(pid_t PID) {
         head = head->next;
         free(tempNode);
     } else {
+        tempNode = tempNode->next;
+        node* prevTemp = head;
         printf("need to iterate\n");
         while((tempNode != NULL) && (tempNode->pid != PID)) {
-            printf("    iterating through");
+            printf("at node with %d %s\n", tempNode->pid, tempNode->programName);
+            printf("    iterating through\n");
             tempNode = tempNode->next;
+            prevTemp = prevTemp->next;
         }
-        tempNode = tempNode->next;
+        if(tempNode == NULL) {
+            printf("Invalid PID\n");
+            return;
+        }
+
+        prevTemp->next = tempNode->next;
+        free(tempNode);
+
+        
+
+        
     }
 
     if(tempNode == NULL) {
@@ -157,7 +171,7 @@ void inputHandler() {
         if(token == NULL) {
             printf("Invalid PID given\n");
         } else {
-            int removalPID = (int)token;
+            pid_t removalPID = atoi(token);
             printf("next token is %s\n", token);
             printf("Going to remove node  with pid %d\n", removalPID);
             removeNode(removalPID);
