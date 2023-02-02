@@ -3,13 +3,22 @@
 #include <string.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #define TRUE 1;
 #define FALSE 0;
+
 /**
  * A linked list data structure to
  * store our processes and navigate 
  * through them
+ * PID: Process ID 
+ * programName: Name of program 
+ * isRunning:  True or false if its currently running or not
+ * next: reference to next node;
  */
 typedef struct node {
 	pid_t pid;
@@ -22,7 +31,7 @@ node* head = NULL;
 int tempPID = 123;
 
 /**
- * Takes in PID, and program name
+ * Takes in PID and program name,
  * adds to end of process linked list
  */ 
 void addNode(pid_t PID, char* program) {
@@ -32,6 +41,7 @@ void addNode(pid_t PID, char* program) {
     process->programName = program;
     process->isRunning = TRUE;
     process->next = NULL;
+
     if(head == NULL) {
         head = process;
     } else {
@@ -57,7 +67,11 @@ void printList() {
         tempNode = tempNode->next;
     }
     printf("-------------\n");
-    printf("head is still %d  %s\n", head->pid, head->programName);
+    if(head == NULL) {
+        printf("head is null\n");
+    } else {
+        printf("head is still %d  %s\n", head->pid, head->programName);
+    }
     printf("-------------\n");
 }
 
@@ -71,34 +85,9 @@ void printList() {
 
 void removeNode(pid_t PID) {
 
- 
-    // node* tempNode = head;
-    // printf("tempNode is %d %n\n", tempNode->pid, tempNode->programName);
-    // if(tempNode->pid == PID) {
-    //     printf("head is pid\n");
-    //     free(head);
-    //     head = head->next;
-    // } else {
-    //     printf("head is not pid, iterating\n");
-    //     while(tempNode->next->pid != PID) {
-    //         printf("tempnode pid is %d\n", tempNode->pid);
-    //         if(tempNode->next == NULL) {
-    //             printf("Process with PID: %n does not exist", PID);
-    //             break;
-    //         }
-            
-    //         printf("Iterating through LL\n");
-    //         tempNode = tempNode->next;
-
-    //     }
-    //     free(tempNode->next);
-    //     //tempNode->next = tempNode->next->next;
-    // }
-
     node* tempNode = head;
     printf("PID to be deleted is %d\n", PID);
     printf("tempnode specs: %d %s\n", tempNode->pid, tempNode->programName);
-    //Head node is the one to be removed
     if(tempNode->pid == PID) {
         printf("head is to be removed\n");
         head = head->next;
@@ -121,14 +110,39 @@ void removeNode(pid_t PID) {
         prevTemp->next = tempNode->next;
         free(tempNode);
 
-        
-
-        
     }
 
     if(tempNode == NULL) {
         printf("PID does not exist\n");
     }
+
+}
+
+/**
+ * Returns node object with a specific PID
+ */
+node* getNode(pid_t PID) {
+    node* tempNode = head;
+
+    if(tempNode->pid == PID) {
+        return tempNode;
+    }  else {
+        while(tempNode != NULL && tempNode->pid != PID) {
+            tempNode = tempNode->next;
+        }
+        return tempNode;
+    }
+}
+
+int* bgcount() {
+    node* tempNode = head;
+    int counter = 0;
+    while(tempNode != NULL) {
+        counter++;
+        tempNode = tempNode->next;
+    }
+    printf("Total background jobs: %d\n", counter);
+    return counter;
 }
 
     /**
@@ -153,8 +167,20 @@ void inputHandler() {
         if(token == NULL) {
             printf("No program given\n");
         } else {
-            addNode(tempPID, token);
-            printf("added pid is %d\n", tempPID);
+            
+            pid_t PID = fork();
+
+            if(PID > 0) {
+                addNode(PID, token);
+                printf("added pid is %d\n", PID);
+                sleep(1);
+            } else if(PID == 0) {
+                printf("failed\n");
+                exit(1);
+            } else {
+                printf("Fork error\n");
+            }
+            printf("Generated PID is %d\n", PID);
         }
 
     }else if(strcmp(token, "bglist") == 0) {
@@ -162,6 +188,7 @@ void inputHandler() {
         printf("Read bglist\n");
 
         printList();
+        bgcount();
 
     }else if(strcmp(token, "bgkill") == 0) {
         //End process with given PID, send TERM signal (Next token)
@@ -176,26 +203,43 @@ void inputHandler() {
             printf("Going to remove node  with pid %d\n", removalPID);
             removeNode(removalPID);
         }
+    
 
     }else if(strcmp(token, "bgstop") == 0) {
         //Temp. stop of process with PID, send STOP signal (Next token)
         printf("Read bgstop\n");
 
+        token = strtok(NULL, " ");
+        if(token == NULL) {
+            printf("Invalid PID given\n");
+        } else {
+            pid_t PID = atoi(token);
+            kill(PID, SIGSTOP);
+        }
+
     }else if(strcmp(token, "bgstart") == 0) {
         //Restart previously stopped process with PID, send CONT signal  
         printf("Read bgstart\n");
 
+        token = strtok(NULL, " ");
+        if(token == NULL) {
+            printf("Invalid PID given\n");
+        } else {
+            pid_t PID = atoi(token);
+            kill(PID, SIGCONT);
+        }
+
     }else if(strcmp(token, "pstat") == 0) {
         printf("Read pstat\n");
+
+
 
     } else if(strcmp(token, "exit") == 0) {
         exit(1);
     } else {
-        printf("Invalid commands\n");
+        printf("Invalid command\n");
     }
 
-    
-    
 }
 
 int
@@ -206,8 +250,6 @@ main(int argc, char* argv[])
         inputHandler();
         tempPID++;
     }
-
-	
 
 	return 0;
 }
