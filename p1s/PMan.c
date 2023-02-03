@@ -28,7 +28,6 @@ typedef struct node {
 } node;
 
 node* head = NULL;
-int tempPID = 123;
 
 /**
  * Takes in PID and program name,
@@ -134,6 +133,35 @@ node* getNode(pid_t PID) {
     }
 }
 
+/**
+ * Given a PID, set the isRunning LL node 
+ * to FALSE after sending SIGSTOP signal
+ */
+void stopNode(pid_t PID) {
+    node* tempNode = head;
+    while(tempNode->pid != PID) {
+        tempNode = tempNode->next;
+    }
+    tempNode->isRunning = FALSE;
+}
+
+/**
+ * Given a  PID, set the isRunning LL node
+ * to TRUE after sending SIGCONT signal
+ */
+void startNode(pid_t PID) {
+    node* tempNode = head;
+    while(tempNode->pid != PID) {
+        tempNode = tempNode->next;
+    }
+    tempNode->isRunning = TRUE;
+}
+
+/**
+ * Function that counts total number
+ * of nodes present in LL
+ * Returns int
+ */ 
 int* bgcount() {
     node* tempNode = head;
     int counter = 0;
@@ -159,7 +187,6 @@ void inputHandler() {
     char* myCommand = readline("PMan: >");
     char* token = strtok(myCommand, " ");
 
-
     if(strcmp(token, "bg") == 0) {
         //Add second token (program) to linked list (processes)
         printf("Read bg\n");
@@ -173,7 +200,27 @@ void inputHandler() {
             if(PID > 0) {
                 addNode(PID, token);
                 printf("added pid is %d\n", PID);
+                
+                char target[200];
+                char* executableTag = "./";
+                char* executableName = malloc(strlen(token)+2);
+                strcpy(executableName, token);
+                printf("copied token to char\n");
+                printf("%s\n", executableName);
+                printf("%s\n", executableTag);
+
+                strcpy(target, executableTag);
+                strcat(target, executableName);
+
+                int size = strlen(target);
+                target[size-1] = '\0';
+                target[size-2] = '\0';
+                
+                //strcat(executableTag,executableName);
+                printf("About to execute:  %s\n", target);
+                system(target);
                 sleep(1);
+                free(executableName);
             } else if(PID == 0) {
                 printf("failed\n");
                 exit(1);
@@ -214,6 +261,7 @@ void inputHandler() {
             printf("Invalid PID given\n");
         } else {
             pid_t PID = atoi(token);
+            stopNode(PID);
             kill(PID, SIGSTOP);
         }
 
@@ -237,7 +285,7 @@ void inputHandler() {
     } else if(strcmp(token, "exit") == 0) {
         exit(1);
     } else {
-        printf("Invalid command\n");
+        printf("%s: command not found\n", token);
     }
 
 }
@@ -248,7 +296,6 @@ main(int argc, char* argv[])
     for(;;) {
         char* inputCommand[200];
         inputHandler();
-        tempPID++;
     }
 
 	return 0;
