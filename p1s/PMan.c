@@ -12,17 +12,15 @@
 #define FALSE 0;
 
 /**
- * A linked list data structure to
- * store our processes and navigate 
- * through them
+ * A linked list data structure to store our processes and navigate through them.
  * PID: Process ID 
- * programName: Name of program 
+ * command: Name of program 
  * isRunning:  True or false if its currently running or not
  * next: reference to next node;
  */
 typedef struct node {
 	pid_t pid;
-	char* programName;
+	char* command;
     int isRunning;
 	struct node *next;
 } node;
@@ -30,166 +28,133 @@ typedef struct node {
 node* head = NULL;
 
 /**
- * Takes in PID and program name,
- * adds to end of process linked list
+ * Takes in PID and command name, adds to end of process linked list.
  */ 
-void addNode(pid_t PID, char* program) {
+void addNode(pid_t PID, char* command) {
+
     node* process = (struct node*)malloc(sizeof(struct node));
-    
     process->pid = PID;
-    process->programName = program;
+    process->command = command;
     process->isRunning = TRUE;
     process->next = NULL;
 
     if(head == NULL) {
         head = process;
     } else {
-        node* tempNode = head;
-        while(tempNode->next != NULL) {
-            tempNode = tempNode->next;
+        node* iteratorNode = head;
+        while(iteratorNode->next != NULL) {
+            iteratorNode = iteratorNode->next;
         }
-        tempNode->next = process;
+        iteratorNode->next = process;
     }
-
-    printf("process: %s, PID %d\n", process->programName, process->pid);
-
 }
 
 /**
- * Function to loop through our linked
- * list and print all PID and program names
+ * Function to loop through our linked list and print all PID and command names.
  */ 
 void printList() {
-    node* tempNode = head;
-    while(tempNode != NULL) {
-        printf("%d: %s\n", tempNode->pid, tempNode->programName);
-        tempNode = tempNode->next;
+
+    node* iteratorNode = head;
+
+    while(iteratorNode != NULL) {
+        printf("%d: %s\n", iteratorNode->pid, iteratorNode->command);
+        iteratorNode = iteratorNode->next;
     }
-    printf("-------------\n");
-    if(head == NULL) {
-        printf("head is null\n");
-    } else {
-        printf("head is still %d  %s\n", head->pid, head->programName);
-    }
-    printf("-------------\n");
 }
 
 /**
- * Given an input PID, we will
- * remove the corresponding node 
- * in our linked list,
- * and return an error if the node
- * does not exist
+ * Given an input PID, we will remove the corresponding node in our linked list,
+ * and return an error if the node does not exist.
  */
 
 void removeNode(pid_t PID) {
 
-    node* tempNode = head;
-    printf("PID to be deleted is %d\n", PID);
-    printf("tempnode specs: %d %s\n", tempNode->pid, tempNode->programName);
-    if(tempNode->pid == PID) {
-        printf("head is to be removed\n");
+    node* iteratorNode = head;
+
+    if(iteratorNode->pid == PID) {
         head = head->next;
-        free(tempNode);
+        free(iteratorNode);
     } else {
-        tempNode = tempNode->next;
+        iteratorNode = iteratorNode->next;
         node* prevTemp = head;
-        printf("need to iterate\n");
-        while((tempNode != NULL) && (tempNode->pid != PID)) {
-            printf("at node with %d %s\n", tempNode->pid, tempNode->programName);
-            printf("    iterating through\n");
-            tempNode = tempNode->next;
+        while((iteratorNode != NULL) && (iteratorNode->pid != PID)) {
+            iteratorNode = iteratorNode->next;
             prevTemp = prevTemp->next;
         }
-        if(tempNode == NULL) {
+        if(iteratorNode == NULL) {
             printf("Invalid PID\n");
             return;
         }
-
-        prevTemp->next = tempNode->next;
-        free(tempNode);
-
+        prevTemp->next = iteratorNode->next;
+        free(iteratorNode);
     }
-
-    if(tempNode == NULL) {
+    if(iteratorNode == NULL) {
         printf("PID does not exist\n");
     }
-
 }
 
 /**
- * Returns node object with a specific PID
+ * Given a PID and a status, update the specified node's isRunning field.
+ * If the process linked list is empty, prints out an error message.
  */
-node* getNode(pid_t PID) {
-    node* tempNode = head;
+void setRunning(pid_t PID, int status) {
 
-    if(tempNode->pid == PID) {
-        return tempNode;
-    }  else {
-        while(tempNode != NULL && tempNode->pid != PID) {
-            tempNode = tempNode->next;
+    if(head == NULL) {
+        printf("No background processes\n");
+    } else {
+        node* iteratorNode = head;
+        while(iteratorNode->pid != PID) {
+            iteratorNode = iteratorNode->next;
         }
-        return tempNode;
+        if(iteratorNode == NULL) {
+            printf("No such process with PID %d\n", PID);
+        }
+        iteratorNode->isRunning = status;
     }
 }
 
 /**
- * Given a PID, set the isRunning LL node 
- * to FALSE after sending SIGSTOP signal
- */
-void stopNode(pid_t PID) {
-    node* tempNode = head;
-    while(tempNode->pid != PID) {
-        tempNode = tempNode->next;
-    }
-    tempNode->isRunning = FALSE;
-}
-
-/**
- * Given a  PID, set the isRunning LL node
- * to TRUE after sending SIGCONT signal
- */
-void startNode(pid_t PID) {
-    node* tempNode = head;
-    while(tempNode->pid != PID) {
-        tempNode = tempNode->next;
-    }
-    tempNode->isRunning = TRUE;
-}
-
-/**
- * Function that counts total number
- * of nodes present in LL
- * Returns int
+ * Function that counts total number of nodes present in LL.
+ * Returns int.
  */ 
 int* bgcount() {
-    node* tempNode = head;
+
+    node* iteratorNode = head;
+
     int counter = 0;
-    while(tempNode != NULL) {
+    while(iteratorNode != NULL) {
         counter++;
-        tempNode = tempNode->next;
+        iteratorNode = iteratorNode->next;
     }
     printf("Total background jobs: %d\n", counter);
     return counter;
 }
 
-    /**
-	 * Get user input
-	 * 
-	 * How it works:
-	 * Given an input, program will tokenize string
-	 * and depending on input (bg, bglist, ...etc.),
-	 * it will work with the linked list to perform
-	 * the given actions.
-	 */
+/**
+ * Get user input.
+ * 
+ * How it works:
+ * Given an input, program will tokenize string
+ * and depending on input (bg, bglist, ...etc.),
+ * it will work with the linked list to perform
+ * the given actions.
+ * 
+ * Supported commands are:
+ * bg, bglist, bgkill, bgstart, bgstop, pstat
+ * 
+ * Custom commands:
+ * exit
+ * 
+ * If the user enters "exit" as a command, PMan will
+ * terminate and allow the user to return to their
+ * normal terminal interface.
+ */
 void inputHandler() {
 
     char* myCommand = readline("PMan: >");
     char* token = strtok(myCommand, " ");
 
     if(strcmp(token, "bg") == 0) {
-        //Add second token (program) to linked list (processes)
-        printf("Read bg\n");
         token = strtok(NULL, " ");
         if(token == NULL) {
             printf("No program given\n");
@@ -197,90 +162,54 @@ void inputHandler() {
             
             pid_t PID = fork();
 
-            if(PID > 0) {
+            if(PID > 0) {   //parent
                 addNode(PID, token);
-                printf("added pid is %d\n", PID);
-                
-                char target[200];
-                char* executableTag = "./";
-                char* executableName = malloc(strlen(token)+2);
-                strcpy(executableName, token);
-                printf("copied token to char\n");
-                printf("%s\n", executableName);
-                printf("%s\n", executableTag);
-
-                strcpy(target, executableTag);
-                strcat(target, executableName);
-
-                int size = strlen(target);
-                target[size-1] = '\0';
-                target[size-2] = '\0';
-                
-                //strcat(executableTag,executableName);
-                printf("About to execute:  %s\n", target);
-                system(target);
+                printf("Started new process with PID: %d\n", PID);
                 sleep(1);
-                free(executableName);
-            } else if(PID == 0) {
-                printf("failed\n");
+            } else if(PID == 0) {   //child
+                execvp(token, &token);
+                printf("execvp() failed\n");
                 exit(1);
             } else {
                 printf("Fork error\n");
             }
-            printf("Generated PID is %d\n", PID);
         }
 
     }else if(strcmp(token, "bglist") == 0) {
-        //Print out all processes
-        printf("Read bglist\n");
-
         printList();
         bgcount();
 
     }else if(strcmp(token, "bgkill") == 0) {
-        //End process with given PID, send TERM signal (Next token)
-        printf("Read bgkill\n");
-
         token = strtok(NULL, " ");
         if(token == NULL) {
             printf("Invalid PID given\n");
         } else {
             pid_t removalPID = atoi(token);
-            printf("next token is %s\n", token);
-            printf("Going to remove node  with pid %d\n", removalPID);
             removeNode(removalPID);
         }
     
 
     }else if(strcmp(token, "bgstop") == 0) {
-        //Temp. stop of process with PID, send STOP signal (Next token)
-        printf("Read bgstop\n");
-
         token = strtok(NULL, " ");
         if(token == NULL) {
             printf("Invalid PID given\n");
         } else {
             pid_t PID = atoi(token);
-            stopNode(PID);
+            setRunning(PID, 0);
             kill(PID, SIGSTOP);
         }
 
     }else if(strcmp(token, "bgstart") == 0) {
-        //Restart previously stopped process with PID, send CONT signal  
-        printf("Read bgstart\n");
-
         token = strtok(NULL, " ");
         if(token == NULL) {
             printf("Invalid PID given\n");
         } else {
             pid_t PID = atoi(token);
+            setRunning(PID, 1);
             kill(PID, SIGCONT);
         }
 
     }else if(strcmp(token, "pstat") == 0) {
-        printf("Read pstat\n");
-
-
 
     } else if(strcmp(token, "exit") == 0) {
         exit(1);
@@ -290,12 +219,63 @@ void inputHandler() {
 
 }
 
+/**
+ * Function that updates all the child process and background
+ * programs based on their PID and whether or not 
+ * they've been terminated, stopped, or resumed.
+ * 
+ * Utilizes waitpid() to give a return value, status.
+ * 
+ * pid_t waitpid(pid_t pid, int *status, int options);
+ * pid: Process ID of our wanted process.
+ * status: a variable to store our resulting status call.
+ * options: tracking the statuses that our process could have.
+ */
+void updateStatus() {
+    
+    for(;;) {
+        int status;
+        pid_t PID = waitpid(-1, &status, WCONTINUED | WNOHANG | WUNTRACED);
+        if(PID > 0) {
+            if(WIFCONTINUED(status)) {
+                printf("Child process was resumed by delivery of SIGCONT\n");
+                setRunning(PID, 1);
+            } else if(WIFSTOPPED(status)) {
+                printf("Child process was stopped by delivery of a signal\n");
+                setRunning(PID, 0);
+            } else if(WIFSIGNALED(status)) {
+                printf("Child process was terminated by a signal\n");
+                removeNode(PID);
+            } else if(WIFEXITED(status)) {
+                printf("Child terminated normally\n");
+                removeNode(PID);
+            }
+        } else {
+            return;
+        }
+    }
+}
+
+/**
+ * Main function to initialize everything.
+ * 
+ * inputHandler() handles the user input, and
+ * executes the corresponding commands with helper functions.
+ * 
+ * updateStatus() executes after every completed user input 
+ * and program execution, then updates the isRunning status of 
+ * processes in our linked list with their corresponding status
+ * based off of the results from waitpid().
+ */
 int
 main(int argc, char* argv[])
 {
     for(;;) {
-        char* inputCommand[200];
+        //char* inputCommand[200];
+        //int i = 0;
+        char* string[13];
         inputHandler();
+        updateStatus();
     }
 
 	return 0;
