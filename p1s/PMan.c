@@ -240,7 +240,7 @@ void inputHandler() {
  * Utilizes waitpid() to give a return value, status.
  * 
  * pid_t waitpid(pid_t pid, int *status, int options);
- * pid: Process ID of our wanted process.
+ * pid: Process ID of our wanted process, set to -1 to wait for ANY child process.
  * status: a variable to store our resulting status call.
  * options: tracking the statuses that our process could have.
  */
