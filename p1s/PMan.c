@@ -108,8 +108,10 @@ void setRunning(pid_t PID, int status) {
         }
         if(iteratorNode == NULL) {
             printf("No such process with PID %d\n", PID);
+            return;
+        } else {
+            iteratorNode->isRunning = status;
         }
-        iteratorNode->isRunning = status;
     }
 }
 
@@ -117,7 +119,7 @@ void setRunning(pid_t PID, int status) {
  * Function that counts total number of nodes present in LL.
  * Returns int.
  */ 
-int* bgcount() {
+int bgcount() {
 
     node* iteratorNode = head;
 
@@ -153,21 +155,32 @@ void inputHandler() {
 
     char* myCommand = readline("PMan: >");
     char* token = strtok(myCommand, " ");
-
+    char* commands[10];
+ 
     if(strcmp(token, "bg") == 0) {
         token = strtok(NULL, " ");
+        char* arguments = token;    //Saving a copy of token
         if(token == NULL) {
             printf("No program given\n");
         } else {
-            
             pid_t PID = fork();
-
             if(PID > 0) {   //parent
                 addNode(PID, token);
                 printf("Started new process with PID: %d\n", PID);
                 sleep(1);
             } else if(PID == 0) {   //child
-                execvp(token, &token);
+                //Iterate through remaining commands, storing them into commands[] to pass to execvp()
+                int i = 0;
+                commands[i] = arguments;
+                i++;
+                arguments = strtok(NULL, " ");
+                while(arguments != NULL) {
+                    commands[i] = arguments;
+                    arguments = strtok(NULL, " ");
+                    i++;
+                }
+                commands[i] = NULL;
+                execvp(token, commands);
                 printf("execvp() failed\n");
                 exit(1);
             } else {
@@ -273,7 +286,7 @@ main(int argc, char* argv[])
     for(;;) {
         //char* inputCommand[200];
         //int i = 0;
-        char* string[13];
+        char* string[200];
         inputHandler();
         updateStatus();
     }
