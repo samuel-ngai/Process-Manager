@@ -284,9 +284,6 @@ int
 main(int argc, char* argv[])
 {
     for(;;) {
-        //char* inputCommand[200];
-        //int i = 0;
-        char* string[200];
         inputHandler();
         updateStatus();
     }
