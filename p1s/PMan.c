@@ -328,8 +328,9 @@ void inputHandler() {
         if(token == NULL) {
             printf("Invalid PID given\n");
         } else {
-            pid_t removalPID = atoi(token);
-            removeNode(removalPID);
+            pid_t PID = atoi(token);
+            removeNode(PID);
+            kill(PID, SIGTERM);
         }
     
 
