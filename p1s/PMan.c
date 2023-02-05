@@ -252,6 +252,8 @@ void pstat(pid_t PID) {
         readStatFile(statFile, statData);
         readStatusFile(statusFile, statusData);
         
+    } else {
+        printf("Invalid PID\n");
     }
 }
 
