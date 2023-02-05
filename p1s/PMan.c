@@ -246,14 +246,17 @@ void pstat(pid_t PID) {
         sprintf(stat, "/proc/%d/stat", PID);
         sprintf(status, "/proc/%d/status", PID);
 
+        printf("stat = %s\n", stat);
+        printf("status = %s\n",status);
+
         char* fileContents[200];
-        FILE* statFile = fopen(stat, "r");
-        FILE* statusFile = fopen(status, "r");
+        //FILE* statFile = fopen(stat, "r");
+        //FILE* statusFile = fopen(status, "r");
         char statData[128];
         char statusData[128];
 
-        readStatFile(statFile, statData);
-        readStatusFile(statusFile, statusData);
+        readStatFile(stat, statData);
+        readStatusFile(status, statusData);
         
     } else {
         printf("Invalid PID\n");
