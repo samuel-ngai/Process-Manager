@@ -116,6 +116,45 @@ void setRunning(pid_t PID, int status) {
 }
 
 /**
+ * Function to determine whether or not a process exists in our linked list
+ */
+int nodeExists(pid_t PID) {
+    node* iteratorNode = head;
+
+    if(head ==  NULL) {
+        return 0;
+    } else {
+        while(iteratorNode != NULL) {
+            if(iteratorNode->pid == PID) {
+                return 1;
+            }
+            iteratorNode = iteratorNode->next;
+        }
+    }
+    return 0;
+}
+
+/**
+ * Given a PID, return the corresponding  node*
+ */
+node* getNode(pid_t PID) {
+    node* iteratorNode = head;
+
+    if(head == NULL) {
+        return NULL;
+    } else {
+        while(iteratorNode != NULL) {
+            if(iteratorNode->pid == PID) {
+                printf("Returning Node with PID = %d\n", PID);
+                return iteratorNode;
+            }
+            iteratorNode = iteratorNode->next;
+        }
+    }
+    return NULL;
+}
+
+/**
  * Function that counts total number of nodes present in LL.
  * Returns int.
  */ 
@@ -130,6 +169,40 @@ int bgcount() {
     }
     printf("Total background jobs: %d\n", counter);
     return counter;
+}
+
+char* getPath(pid_t PID) {
+    node* myNode = getNode(PID);
+
+    return myNode;
+}
+
+void pstat(pid_t PID) {
+    if(nodeExists(PID)) {
+        node* processNode = getNode(PID);
+        char statusContents[200];
+
+        printf("here\n");
+        printf("PID = ok\n");
+        char* status[200];
+        sprintf(status, "/proc/%d/stat", PID);
+        sprintf(statusContents, "/proc/%d/status", PID);
+
+        char* fileContents[200];
+        FILE* statusFile = fopen(statusContents, "r");
+
+        if(statusFile != NULL) {
+            int i = 0;
+            while(fgets(fileContents[i], 200, statusFile) != NULL) {
+                i++;
+            }
+            fclose(statusFile);
+        } else {
+            printf("error with file\n");
+            return;
+        }
+    }
+
 }
 
 /**
@@ -223,6 +296,14 @@ void inputHandler() {
         }
 
     }else if(strcmp(token, "pstat") == 0) {
+        printf("read pstat\n");
+        token = strtok(NULL, " ");
+        if(token == NULL) {
+            printf("Please enter a valid PID\n");
+        } else {
+            pstat(atoi(token));
+        }
+        
 
     } else if(strcmp(token, "exit") == 0) {
         exit(1);
