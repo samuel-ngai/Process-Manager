@@ -179,6 +179,7 @@ char* getPath(pid_t PID) {
 
 void readStatFile(char* procPath, char** data) {
 
+    printf("stat path is %s\n", procPath);
     FILE* statFile = fopen(procPath, "r");
     char fileContents[1024];
 
@@ -206,6 +207,8 @@ void readStatFile(char* procPath, char** data) {
 }
 
 void readStatusFile(char* procPath, char** data) {
+
+    printf("status path is %s\n", procPath);
     FILE* statusFile = fopen(procPath, "r");
     char fileContents[1024];
 
