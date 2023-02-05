@@ -200,7 +200,7 @@ void readStatFile(char* procPath, char** data) {
         printf("Could not read stat file \n");
     }
     for(int i = 0; i<20; i++) {
-        printf("%s", data[i]);
+        printf("%c", data[i]);
     }
     printf("\n");
 
@@ -229,7 +229,7 @@ void readStatusFile(char* procPath, char** data) {
         printf("Could not read status file\n");
     }
     for(int i = 0; i<20; i++) {
-        printf("%s", data[i]);
+        printf("%c", data[i]);
     }
     printf("\n");
     
