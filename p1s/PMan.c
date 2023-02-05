@@ -238,11 +238,11 @@ void readStatusFile(char* procPath, char** data) {
 void pstat(pid_t PID) {
     if(nodeExists(PID)) {
         node* processNode = getNode(PID);
-        char* status[200];
+        char status[200];
 
         printf("here\n");
         printf("PID = ok\n");
-        char* stat[200];
+        char stat[200];
         sprintf(stat, "/proc/%d/stat", PID);
         sprintf(status, "/proc/%d/status", PID);
 
