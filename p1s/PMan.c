@@ -177,32 +177,82 @@ char* getPath(pid_t PID) {
     return myNode;
 }
 
+void readStatFile(char* procPath, char** data) {
+
+    FILE* statFile = fopen(procPath, "r");
+    char fileContents[1024];
+
+    if(statFile != NULL) {
+        int iterator = 0;
+        int dataSize = sizeof(fileContents)-1;
+        while(fgets(fileContents, dataSize, statFile) != NULL) {
+            char* token = strtok(fileContents, " ");
+            data[iterator] = token;
+            while(token != NULL) {
+                data[iterator] = token;
+                token = strtok(NULL, " ");
+                iterator++;
+            }
+        }
+        fclose(statFile);
+    } else if(statFile == NULL) {
+        printf("Could not read stat file \n");
+    }
+    for(int i = 0; i<20; i++) {
+        printf("%s", data[i]);
+    }
+    printf("\n");
+
+}
+
+void readStatusFile(char* procPath, char** data) {
+    FILE* statusFile = fopen(procPath, "r");
+    char fileContents[1024];
+
+    if(statusFile != NULL) {
+        int iterator = 0;
+        int dataSize = sizeof(fileContents)-1;
+        while(fgets(fileContents, dataSize, statusFile) != NULL) {
+            char* token = strtok(fileContents, " ");
+            data[iterator] = token;
+            while(token != NULL) {
+                data[iterator] = token;
+                token = strtok(NULL, " ");
+                iterator++;
+            }
+        }
+        fclose(statusFile);
+    }  else if(statusFile == NULL) {
+        printf("Could not read status file\n");
+    }
+    for(int i = 0; i<20; i++) {
+        printf("%s", data[i]);
+    }
+    printf("\n");
+    
+}
+
 void pstat(pid_t PID) {
     if(nodeExists(PID)) {
         node* processNode = getNode(PID);
-        char statusContents[200];
+        char* status[200];
 
         printf("here\n");
         printf("PID = ok\n");
-        char* status[200];
-        sprintf(status, "/proc/%d/stat", PID);
-        sprintf(statusContents, "/proc/%d/status", PID);
+        char* stat[200];
+        sprintf(stat, "/proc/%d/stat", PID);
+        sprintf(status, "/proc/%d/status", PID);
 
         char* fileContents[200];
-        FILE* statusFile = fopen(statusContents, "r");
+        FILE* statFile = fopen(stat, "r");
+        FILE* statusFile = fopen(status, "r");
+        char statData[128];
+        char statusData[128];
 
-        if(statusFile != NULL) {
-            int i = 0;
-            while(fgets(fileContents[i], 200, statusFile) != NULL) {
-                i++;
-            }
-            fclose(statusFile);
-        } else {
-            printf("error with file\n");
-            return;
-        }
+        readStatFile(statFile, statData);
+        readStatusFile(statusFile, statusData);
+        
     }
-
 }
 
 /**
