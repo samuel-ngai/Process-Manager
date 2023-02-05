@@ -9,6 +9,5 @@ int main(int argc, char* argv[]) {
     printf("lol gg?\n");
     sleep(3);
     printf("but sleep again\n");
-    exit();
     return 0;
 }
