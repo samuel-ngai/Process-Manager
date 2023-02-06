@@ -379,7 +379,6 @@ void inputHandler() {
             kill(PID, SIGTERM);
         }
     
-
     }else if(strcmp(token, "bgstop") == 0) {
         token = strtok(NULL, " ");
         if(token == NULL) {
@@ -432,46 +431,46 @@ void inputHandler() {
  */
 void updateStatus() {
     
-    // for(;;) {
-    //     int status;
-    //     pid_t PID = waitpid(-1, &status, WCONTINUED | WNOHANG | WUNTRACED);
-    //     if(PID > 0) {
-    //         if(WIFCONTINUED(status)) {
-    //             printf("Child process was resumed by delivery of SIGCONT\n");
-    //             setRunning(PID, 1);
-    //         } else if(WIFSTOPPED(status)) {
-    //             printf("Child process was stopped by delivery of a signal\n");
-    //             setRunning(PID, 0);
-    //         } else if(WIFSIGNALED(status)) {
-    //             printf("Child process was terminated by a signal\n");
-    //             removeNode(PID);
-    //         } else if(WIFEXITED(status)) {
-    //             printf("Child terminated normally\n");
-    //             removeNode(PID);
-    //         }
-    //     } else {
-    //         return;
-    //     }
-    // }
-    int status;
-    pid_t PID = waitpid(-1, &status, WCONTINUED | WNOHANG | WUNTRACED);
-    if(PID > 0) {
-        if(WIFCONTINUED(status)) {
-            printf("Child process was resumed by delivery of SIGCONT\n");
-            setRunning(PID, 1);
-        } else if(WIFSTOPPED(status)) {
-            printf("Child process was stopped by delivery of a signal\n");
-            setRunning(PID, 0);
-        } else if(WIFSIGNALED(status)) {
-            printf("Child process was terminated by a signal\n");
-            removeNode(PID);
-        } else if(WIFEXITED(status)) {
-            printf("Child terminated normally\n");
-            removeNode(PID);
+    for(;;) {
+        int status;
+        pid_t PID = waitpid(-1, &status, WCONTINUED | WNOHANG | WUNTRACED);
+        if(PID > 0) {
+            if(WIFCONTINUED(status)) {
+                printf("Child process was resumed by delivery of SIGCONT\n");
+                setRunning(PID, 1);
+            } else if(WIFSTOPPED(status)) {
+                printf("Child process was stopped by delivery of a signal\n");
+                setRunning(PID, 0);
+            } else if(WIFSIGNALED(status)) {
+                printf("Child process was terminated by a signal\n");
+                removeNode(PID);
+            } else if(WIFEXITED(status)) {
+                printf("Child terminated normally\n");
+                removeNode(PID);
+            }
+        } else {
+            return;
         }
-    } else {
-        return;
     }
+    // int status;
+    // pid_t PID = waitpid(-1, &status, WCONTINUED | WNOHANG | WUNTRACED);
+    // if(PID > 0) {
+    //     if(WIFCONTINUED(status)) {
+    //         printf("Child process was resumed by delivery of SIGCONT\n");
+    //         setRunning(PID, 1);
+    //     } else if(WIFSTOPPED(status)) {
+    //         printf("Child process was stopped by delivery of a signal\n");
+    //         setRunning(PID, 0);
+    //     } else if(WIFSIGNALED(status)) {
+    //         printf("Child process was terminated by a signal\n");
+    //         removeNode(PID);
+    //     } else if(WIFEXITED(status)) {
+    //         printf("Child terminated normally\n");
+    //         removeNode(PID);
+    //     }
+    // } else {
+    //     return;
+    // }
 }
 
 /**
