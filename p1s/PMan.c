@@ -283,6 +283,10 @@ void pstat(pid_t PID) {
         readStatFile(stat, statData);
         readStatusFile(status, statusData);
         
+        for(int i = 0; i<20; i++) {
+            printf("%s", statData[i]);
+        }
+        printf("\n");
     } else {
         printf("Invalid PID\n");
     }
