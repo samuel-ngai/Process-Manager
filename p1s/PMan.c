@@ -57,7 +57,9 @@ void printList() {
     node* iteratorNode = head;
 
     while(iteratorNode != NULL) {
-        printf("%d: %s\n", iteratorNode->pid, iteratorNode->command);
+        char* actualPath[128];
+        realpath(iteratorNode->command, actualPath);
+        printf("%d: %s\n", iteratorNode->pid, actualPath);
         iteratorNode = iteratorNode->next;
     }
 }
@@ -172,11 +174,11 @@ int bgcount() {
     return counter;
 }
 
-char* getPath(pid_t PID) {
-    node* myNode = getNode(PID);
+// char* getPath(pid_t PID) {
+//     node* myNode = getNode(PID);
 
-    return myNode;
-}
+//     return myNode;
+// }
 
 /**
  * Function to read the stat file for a given PID filepath off of the /proc directory
@@ -194,9 +196,9 @@ char** readStatFile(char* procPath) {
         int dataSize = sizeof(fileContents)-1;
         while(fgets(fileContents, dataSize, statFile) != NULL) {
             char* token = strtok(fileContents, " ");
-            data[iterator] = token;
+            data[iterator] = &token;
             while(token != NULL) {
-                data[iterator] = token;
+                data[iterator] = &token;
                 token = strtok(NULL, " ");
                 iterator++;
             }
@@ -207,7 +209,7 @@ char** readStatFile(char* procPath) {
         return NULL;
     }
     printf("finish reading file\n");
-    return data;
+    return *data;
 }
 /**
  * Function to read the status file for a given PID filepath off of the /proc directory
@@ -225,9 +227,9 @@ char** readStatusFile(char* procPath) {
         int dataSize = sizeof(fileContents)-1;
         while(fgets(fileContents, dataSize, statusFile) != NULL) {
             char* token = strtok(fileContents, " ");
-            data[iterator] = token;
+            data[iterator] = &token;
             while(token != NULL) {
-                data[iterator] = token;
+                data[iterator] = &token;
                 token = strtok(NULL, " ");
                 iterator++;
             }
@@ -238,7 +240,7 @@ char** readStatusFile(char* procPath) {
         return NULL;
     }
     printf("finish reading file\n");
-    return data;
+    return *data;
 }
 
 /**
@@ -283,11 +285,11 @@ void pstat(pid_t PID) {
         char* fileContents[200];
         //FILE* statFile = fopen(stat, "r");
         //FILE* statusFile = fopen(status, "r");
-        char statData[128];
-        char statusData[128];
+        char* statData[128];
+        char* statusData[128];
 
-        statData[127] = readStatFile(stat);
-        statusData[127] = readStatusFile(status);
+        statData[127] = *readStatFile(stat);
+        statusData[127] = *readStatusFile(status);
         
         printf("here\n");
         for(int i = 1; i<20; i++) {
@@ -328,8 +330,8 @@ void inputHandler() {
     //
     //
     //
-    // if(strcmp(myCommand, NULL) == 0) {
-    //     return;
+    // if(strcmp(myCommand, '\0') == 0) {
+    //     printf("Please enter a command\n");
     // }
 
     if(strcmp(token, "bg") == 0) {
@@ -430,26 +432,45 @@ void inputHandler() {
  */
 void updateStatus() {
     
-    for(;;) {
-        int status;
-        pid_t PID = waitpid(-1, &status, WCONTINUED | WNOHANG | WUNTRACED);
-        if(PID > 0) {
-            if(WIFCONTINUED(status)) {
-                printf("Child process was resumed by delivery of SIGCONT\n");
-                setRunning(PID, 1);
-            } else if(WIFSTOPPED(status)) {
-                printf("Child process was stopped by delivery of a signal\n");
-                setRunning(PID, 0);
-            } else if(WIFSIGNALED(status)) {
-                printf("Child process was terminated by a signal\n");
-                removeNode(PID);
-            } else if(WIFEXITED(status)) {
-                printf("Child terminated normally\n");
-                removeNode(PID);
-            }
-        } else {
-            return;
+    // for(;;) {
+    //     int status;
+    //     pid_t PID = waitpid(-1, &status, WCONTINUED | WNOHANG | WUNTRACED);
+    //     if(PID > 0) {
+    //         if(WIFCONTINUED(status)) {
+    //             printf("Child process was resumed by delivery of SIGCONT\n");
+    //             setRunning(PID, 1);
+    //         } else if(WIFSTOPPED(status)) {
+    //             printf("Child process was stopped by delivery of a signal\n");
+    //             setRunning(PID, 0);
+    //         } else if(WIFSIGNALED(status)) {
+    //             printf("Child process was terminated by a signal\n");
+    //             removeNode(PID);
+    //         } else if(WIFEXITED(status)) {
+    //             printf("Child terminated normally\n");
+    //             removeNode(PID);
+    //         }
+    //     } else {
+    //         return;
+    //     }
+    // }
+    int status;
+    pid_t PID = waitpid(-1, &status, WCONTINUED | WNOHANG | WUNTRACED);
+    if(PID > 0) {
+        if(WIFCONTINUED(status)) {
+            printf("Child process was resumed by delivery of SIGCONT\n");
+            setRunning(PID, 1);
+        } else if(WIFSTOPPED(status)) {
+            printf("Child process was stopped by delivery of a signal\n");
+            setRunning(PID, 0);
+        } else if(WIFSIGNALED(status)) {
+            printf("Child process was terminated by a signal\n");
+            removeNode(PID);
+        } else if(WIFEXITED(status)) {
+            printf("Child terminated normally\n");
+            removeNode(PID);
         }
+    } else {
+        return;
     }
 }
 
