@@ -489,6 +489,7 @@ main(int argc, char* argv[])
 {
     for(;;) {
         updateStatus();
+        usleep(10000);
         inputHandler();
         usleep(10000);
         updateStatus();
