@@ -201,14 +201,10 @@ void readStatFile(char* procPath, char** data) {
             }
         }
         fclose(statFile);
-    } else if(statFile == NULL) {
+    } else {
         printf("Could not read stat file \n");
     }
-    for(int i = 0; i<20; i++) {
-        printf("%c", data[i]);
-    }
-    printf("\n");
-
+    printf("finish reading file\n");
 }
 /**
  * Function to read the status file for a given PID filepath off of the /proc directory
@@ -233,14 +229,10 @@ void readStatusFile(char* procPath, char** data) {
             }
         }
         fclose(statusFile);
-    }  else if(statusFile == NULL) {
+    }  else {
         printf("Could not read status file\n");
     }
-    for(int i = 0; i<20; i++) {
-        printf("%c", data[i]);
-    }
-    printf("\n");
-    
+    printf("finish reading file\n");
 }
 
 /**
