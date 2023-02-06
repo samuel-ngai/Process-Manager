@@ -289,6 +289,7 @@ void pstat(pid_t PID) {
         statData[127] = readStatFile(stat);
         statusData[127] = readStatusFile(status);
         
+        printf("here\n");
         for(int i = 1; i<20; i++) {
             printf("%s", statData[i]);
         }
