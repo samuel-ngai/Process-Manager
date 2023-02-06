@@ -181,9 +181,10 @@ char* getPath(pid_t PID) {
 /**
  * Function to read the stat file for a given PID filepath off of the /proc directory
  */
-void readStatFile(char* procPath, char** data) {
+char** readStatFile(char* procPath) {
 
     printf("stat path is %s\n", procPath);
+    char** data[128];
     FILE* statFile = fopen(procPath, "r");
     char fileContents[1024];
 
@@ -203,15 +204,18 @@ void readStatFile(char* procPath, char** data) {
         fclose(statFile);
     } else {
         printf("Could not read stat file \n");
+        return NULL;
     }
     printf("finish reading file\n");
+    return data;
 }
 /**
  * Function to read the status file for a given PID filepath off of the /proc directory
  */
-void readStatusFile(char* procPath, char** data) {
+char** readStatusFile(char* procPath) {
 
     printf("status path is %s\n", procPath);
+    char** data[128];
     FILE* statusFile = fopen(procPath, "r");
     char fileContents[1024];
 
@@ -231,8 +235,10 @@ void readStatusFile(char* procPath, char** data) {
         fclose(statusFile);
     }  else {
         printf("Could not read status file\n");
+        return NULL;
     }
     printf("finish reading file\n");
+    return data;
 }
 
 /**
@@ -280,8 +286,8 @@ void pstat(pid_t PID) {
         char statData[128];
         char statusData[128];
 
-        readStatFile(stat, statData);
-        readStatusFile(status, statusData);
+        statData[127] = readStatFile(stat);
+        statusData[127] = readStatusFile(status);
         
         for(int i = 0; i<20; i++) {
             printf("%s", statData[i]);
