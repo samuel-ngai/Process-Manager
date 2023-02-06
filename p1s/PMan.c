@@ -178,6 +178,9 @@ char* getPath(pid_t PID) {
     return myNode;
 }
 
+/**
+ * Function to read the stat file for a given PID filepath off of the /proc directory
+ */
 void readStatFile(char* procPath, char** data) {
 
     printf("stat path is %s\n", procPath);
@@ -206,7 +209,9 @@ void readStatFile(char* procPath, char** data) {
     printf("\n");
 
 }
-
+/**
+ * Function to read the status file for a given PID filepath off of the /proc directory
+ */
 void readStatusFile(char* procPath, char** data) {
 
     printf("status path is %s\n", procPath);
@@ -236,6 +241,31 @@ void readStatusFile(char* procPath, char** data) {
     
 }
 
+/**
+ * Function that prints out:
+ * comm: The filename of the executable, in parentheses. 
+ * state; One of the following characters, indicating process state.
+ *      R - Running
+ *      S - Sleeping in an interruptible wait
+ *      D - Waiting in uninterruptible disk sleep
+ *      Z - Zombie
+ *      T - Stopped
+ *      t - Tracing stop
+ *      W - Paging
+ *      X - Dead
+ *      x - Dead
+ *      K - Wakekill
+ *      W - Waking
+ *      P - Parked
+ * utime: Amount of time that this process has been scheduled in user mode.
+ * stime: Amount of time that this process has been scheduled in kernel mode.
+ * rss: Resident set size: Number of pages the process has in real memory.
+ * voluntary ctxt switches: Number of voluntary context switches
+ * nonvoluntary ctxt switches: Number of involuntary context switches.
+ *
+ * Returns an error message when PID does not exist:
+ * "Error: Process *PID* does not exist"
+ */
 void pstat(pid_t PID) {
     if(nodeExists(PID)) {
         node* processNode = getNode(PID);
