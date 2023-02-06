@@ -288,7 +288,15 @@ void inputHandler() {
     char* myCommand = readline("PMan: >");
     char* token = strtok(myCommand, " ");
     char* commands[10];
- 
+
+    //TODO
+    //
+    //
+    //
+    // if(strcmp(myCommand, NULL) == 0) {
+    //     return;
+    // }
+
     if(strcmp(token, "bg") == 0) {
         token = strtok(NULL, " ");
         char* arguments = token;    //Saving a copy of token
@@ -427,6 +435,7 @@ main(int argc, char* argv[])
     for(;;) {
         updateStatus();
         inputHandler();
+        usleep(10000);
         updateStatus();
     }
 
