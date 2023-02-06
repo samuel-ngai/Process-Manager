@@ -188,6 +188,7 @@ void readStatFile(char* procPath, char** data) {
     char fileContents[1024];
 
     if(statFile != NULL) {
+        printf("statfile is NOT null\n");
         int iterator = 0;
         int dataSize = sizeof(fileContents)-1;
         while(fgets(fileContents, dataSize, statFile) != NULL) {
@@ -219,6 +220,7 @@ void readStatusFile(char* procPath, char** data) {
     char fileContents[1024];
 
     if(statusFile != NULL) {
+        printf("statusfile is NOT null\n");
         int iterator = 0;
         int dataSize = sizeof(fileContents)-1;
         while(fgets(fileContents, dataSize, statusFile) != NULL) {
