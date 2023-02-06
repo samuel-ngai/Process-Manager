@@ -72,7 +72,6 @@ void removeNode(pid_t PID) {
     node* iteratorNode = head;
 
     if(iteratorNode == NULL) {
-        printf("PID does not exist\n");
         return;
     }
 
@@ -369,7 +368,7 @@ void inputHandler() {
     } else if(strcmp(token, "exit") == 0) {
         exit(1);
     } else {
-        printf("%s: command not found\n", token);
+        printf("PMan:> %s: command not found\n", token);
     }
 
 }
