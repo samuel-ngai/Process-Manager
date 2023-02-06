@@ -71,6 +71,11 @@ void removeNode(pid_t PID) {
 
     node* iteratorNode = head;
 
+    if(iteratorNode == NULL) {
+        printf("PID does not exist\n");
+        return;
+    }
+
     if(iteratorNode->pid == PID) {
         head = head->next;
         free(iteratorNode);
@@ -87,9 +92,6 @@ void removeNode(pid_t PID) {
         }
         prevTemp->next = iteratorNode->next;
         free(iteratorNode);
-    }
-    if(iteratorNode == NULL) {
-        printf("PID does not exist\n");
     }
 }
 
@@ -424,6 +426,7 @@ int
 main(int argc, char* argv[])
 {
     for(;;) {
+        updateStatus();
         inputHandler();
         updateStatus();
     }
