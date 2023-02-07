@@ -210,11 +210,11 @@ char* readStatFile(char* procPath) {
     }
     printf("finish reading file\n");
     
-    for(int i = 0; i<iterator; i++) {
+    // for(int i = 0; i<iterator; i++) {
 
-        printf("%s", *data[i]);
-    }
-    printf("\n");
+    //     printf("%s", *data[i]);
+    // }
+    // printf("\n");
 
     return *data;
 }
@@ -302,7 +302,7 @@ void pstat(pid_t PID) {
 
         printf("here\n");
         printf("comm: \t%s\n", statData[1]);
-        printf("%s\n", statusData[39]);
+        printf("%s\n", statusData[1]);
         printf("\n");
     } else {
         printf("Invalid PID\n");
