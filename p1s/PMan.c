@@ -190,25 +190,35 @@ char* readStatFile(char* procPath) {
     FILE* statFile = fopen(procPath, "r");
     char fileContents[1024];
     int iterator = 0;
+
+    int unused;
+    char comm[1000];
+    char state;
+    int ppid; 
+    fscanf(statFile, "%d %s %c %d", &unused, comm, &state, &ppid);
+    printf("comm = %s\n", comm);
+    printf("state = %c\n", state);
+    printf("parent pid = %d\n", ppid);
+    fclose(statFile);
     
-    if(statFile != NULL) {
-        printf("statfile is NOT null\n");
-        int dataSize = sizeof(fileContents)-1;
-        while(fgets(fileContents, dataSize, statFile) != NULL) {
-            char* token = strtok(fileContents, " ");
-            data[iterator] = &token;
-            while(token != NULL) {
-                data[iterator] = token;
-                token = strtok(NULL, " ");
-                iterator++;
-            }
-        }
-        fclose(statFile);
-    } else {
-        printf("Could not read stat file \n");
-        return NULL;
-    }
-    printf("finish reading file\n");
+    // if(statFile != NULL) {
+    //     printf("statfile is NOT null\n");
+    //     int dataSize = sizeof(fileContents)-1;
+    //     while(fgets(fileContents, dataSize, statFile) != NULL) {
+    //         char* token = strtok(fileContents, " ");
+    //         data[iterator] = &token;
+    //         while(token != NULL) {
+    //             data[iterator] = token;
+    //             token = strtok(NULL, " ");
+    //             iterator++;
+    //         }
+    //     }
+    //     fclose(statFile);
+    // } else {
+    //     printf("Could not read stat file \n");
+    //     return NULL;
+    // }
+    // printf("finish reading file\n");
     
     // for(int i = 0; i<iterator; i++) {
 
