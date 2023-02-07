@@ -294,9 +294,7 @@ void pstat(pid_t PID) {
         printf("%s\n", statData);
 
         printf("here\n");
-        for(int i = 1; i<20; i++) {
-            printf("%s", statData[i]);
-        }
+        printf("comm: \t%s\n", statData[1]);
         printf("\n");
     } else {
         printf("Invalid PID\n");
