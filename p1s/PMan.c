@@ -212,7 +212,7 @@ char** readStatFile(char* procPath) {
     
     for(int i = 0; i<iterator; i++) {
 
-        printf("%s", data[i]);
+        printf("%s", *data[i]);
     }
     printf("\n");
 
