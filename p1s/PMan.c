@@ -247,6 +247,7 @@ char** readStatusFile(char* procPath) {
         return NULL;
     }
     printf("finish reading file\n");
+    printf("%s", data[1]);
     return *data;
 }
 
