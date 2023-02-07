@@ -186,7 +186,7 @@ int bgcount() {
 char* readStatFile(char* procPath) {
 
     printf("stat path is %s\n", procPath);
-    char** data[128];
+    char* data[128];
     FILE* statFile = fopen(procPath, "r");
     char fileContents[1024];
     int iterator = 0;
