@@ -209,6 +209,7 @@ char** readStatFile(char* procPath) {
         return NULL;
     }
     printf("finish reading file\n");
+    printf("comm:\t%s\n", data[1]);
     return *data;
 }
 /**
