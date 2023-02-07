@@ -183,7 +183,7 @@ int bgcount() {
 /**
  * Function to read the stat file for a given PID filepath off of the /proc directory
  */
-char** readStatFile(char* procPath) {
+char* readStatFile(char* procPath) {
 
     printf("stat path is %s\n", procPath);
     char** data[128];
@@ -198,7 +198,7 @@ char** readStatFile(char* procPath) {
             char* token = strtok(fileContents, " ");
             data[iterator] = &token;
             while(token != NULL) {
-                data[iterator] = &token;
+                data[iterator] = token;
                 token = strtok(NULL, " ");
                 iterator++;
             }
