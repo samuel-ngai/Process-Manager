@@ -232,7 +232,7 @@ char** readStatusFile(char* procPath) {
         printf("statusfile is NOT null\n");
         int iterator = 0;
         int dataSize = sizeof(fileContents)-1;
-        while(fgets(fileContents, dataSize, statusFile) != NULL) {
+        while(fgets(fileContents, dataSize, &statusFile) != NULL) {
             char* token = strtok(fileContents, " ");
             data[iterator] = &token;
             while(token != NULL) {
