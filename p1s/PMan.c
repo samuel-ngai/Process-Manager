@@ -291,6 +291,8 @@ void pstat(pid_t PID) {
         statData[127] = *readStatFile(stat);
         statusData[127] = *readStatusFile(status);
         
+        printf("%s\n", statData);
+
         printf("here\n");
         for(int i = 1; i<20; i++) {
             printf("%s", statData[i]);
@@ -406,6 +408,7 @@ void inputHandler() {
             printf("Please enter a valid PID\n");
         } else {
             pstat(atoi(token));
+
         }
         
 
