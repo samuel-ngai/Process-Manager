@@ -210,7 +210,7 @@ char** readStatFile(char* procPath) {
     }
     printf("finish reading file\n");
     
-    for(int i = 0; i<128; i++) {
+    for(int i = 0; i<127; i++) {
         printf("%s", data[i]);
     }
     printf("\n");
