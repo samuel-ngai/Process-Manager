@@ -189,10 +189,10 @@ char** readStatFile(char* procPath) {
     char** data[128];
     FILE* statFile = fopen(procPath, "r");
     char fileContents[1024];
-
+    int iterator = 0;
+    
     if(statFile != NULL) {
         printf("statfile is NOT null\n");
-        int iterator = 0;
         int dataSize = sizeof(fileContents)-1;
         while(fgets(fileContents, dataSize, statFile) != NULL) {
             char* token = strtok(fileContents, " ");
@@ -210,7 +210,8 @@ char** readStatFile(char* procPath) {
     }
     printf("finish reading file\n");
     
-    for(int i = 0; i<127; i++) {
+    for(int i = 0; i<iterator; i++) {
+
         printf("%s", data[i]);
     }
     printf("\n");
