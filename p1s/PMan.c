@@ -239,28 +239,28 @@ char** readStatusFile(char* procPath) {
     char fileContents[1024];
 
     if(statusFile != NULL) {
-        // printf("statusfile is NOT null\n");
-        // int iterator = 0;
-        // int dataSize = sizeof(fileContents)-1;
-        // while(fgets(fileContents, dataSize, statusFile) != NULL) {
-        //     char* token = strtok(fileContents, " ");
-        //     data[iterator] = &token;
-        //     while(token != NULL) {
-        //         data[iterator] = &token;
-        //         token = strtok(NULL, " ");
-        //         iterator++;
-        //     }
-        // }
-        while(fgets(fileContents, sizeof(fileContents)-1, statusFile) !=  NULL) {
+        printf("statusfile is NOT null\n");
+        int iterator = 0;
+        int dataSize = sizeof(fileContents)-1;
+        while(fgets(fileContents, dataSize, statusFile) != NULL) {
             char* token = strtok(fileContents, " ");
-            strcat(data[0], token);
-            int iterator = 1;
-            while(token != NULL) {  
-                token =  strtok(NULL, " ");
-                data[iterator] = token; 
+            data[iterator] = &token;
+            while(token != NULL) {
+                token = strtok(NULL, " ");
+                data[iterator] = &token;
                 iterator++;
             }
         }
+        // while(fgets(fileContents, sizeof(fileContents)-1, statusFile) !=  NULL) {
+        //     char* token = strtok(fileContents, " ");
+        //     strcat(data[0], token);
+        //     int iterator = 1;
+        //     while(token != NULL) {  
+        //         token =  strtok(NULL, " ");
+        //         data[iterator] = token; 
+        //         iterator++;
+        //     }
+        // }
         fclose(statusFile);
     }  else {
         printf("Could not read status file\n");
