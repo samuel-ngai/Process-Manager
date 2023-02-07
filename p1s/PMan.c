@@ -288,7 +288,7 @@ void pstat(pid_t PID) {
         char* statData[128];
         char* statusData[128];
 
-        statData[127] = *readStatFile(stat);
+        statData[127] = readStatFile(stat);
         statusData[127] = *readStatusFile(status);
         
         printf("%s\n", statData);
