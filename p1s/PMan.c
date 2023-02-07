@@ -195,7 +195,8 @@ char* readStatFile(char* procPath) {
     char comm[1000];
     char state;
     int ppid; 
-    fscanf(statFile, "%d %s %c %d", &unused, comm, &state, &ppid);
+    long rss;
+    fscanf(statFile, "%d %s %c %d %ld", &unused, comm, &state, &ppid, &rss);
     printf("comm = %s\n", comm);
     printf("state = %c\n", state);
     printf("parent pid = %d\n", ppid);
