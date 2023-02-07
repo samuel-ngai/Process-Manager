@@ -200,6 +200,7 @@ char* readStatFile(char* procPath) {
     printf("comm = %s\n", comm);
     printf("state = %c\n", state);
     printf("parent pid = %d\n", ppid);
+    printf("rss = %ld\n", rss);
     fclose(statFile);
     
     // if(statFile != NULL) {
