@@ -268,14 +268,14 @@ char** readStatusFile(char* procPath) {
                 //printf("%s\n", token);
                 data[iterator] = token;
                 //printf("data = %s\n", data[iterator]);
-                iterator++;
+                //iterator++;
 
                 if( iterator == 39 ) {
                     printf("data[39] is %s\n", data[iterator]);
-                } else if(i == 40) {
+                } else if(iterator == 40) {
                     printf("data[40] is %s\n", data[iterator]);
                 }
-                i++;
+                iterator++;
             }
         }
 
