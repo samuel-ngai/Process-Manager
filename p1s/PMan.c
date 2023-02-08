@@ -246,13 +246,18 @@ char** readStatusFile(char* procPath) {
         int dataSize = sizeof(fileContents)-1;
         while(fgets(fileContents, dataSize, statusFile) != NULL) {
             char* token = strtok(fileContents, " ");
+            printf("%s ", token);
             data[iterator] = &token;
             while(token != NULL) {
                 token = strtok(NULL, " ");
+                printf("%s ", token);
                 data[iterator] = &token;
                 iterator++;
             }
         }
+
+        
+
         // while(fgets(fileContents, sizeof(fileContents)-1, statusFile) !=  NULL) {
         //     char* token = strtok(fileContents, " ");
         //     strcat(data[0], token);
@@ -324,8 +329,8 @@ void pstat(pid_t PID) {
         printf("%s\n", statData);
 
         printf("here\n");
-        printf("comm: \t%s\n", statData[1]);
-        printf("%s\n", statusData[1]);
+        //printf("comm: \t%s\n", statData[1]);
+        //printf("%s\n", statusData[1]);
         printf("\n");
     } else {
         printf("Invalid PID\n");
