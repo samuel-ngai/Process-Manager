@@ -355,8 +355,6 @@ void pstat(pid_t PID) {
         node* processNode = getNode(PID);
         char status[200];
 
-        printf("here\n");
-        printf("PID = ok\n");
         char stat[200];
         sprintf(stat, "/proc/%d/stat", PID);
         sprintf(status, "/proc/%d/status", PID);
