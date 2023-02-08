@@ -196,15 +196,15 @@ char* readStatFile(char* procPath) {
     char state;
     int ppid; 
     long rss;
-    fscanf(statFile, "%d %s %c %d %ld", &unused, comm, &state, &ppid, &rss);
+    fscanf(statFile, "%d %s %c %d", &unused, comm, &state, &ppid);
     printf("comm = %s\n", comm);
     printf("state = %c\n", state);
     printf("parent pid = %d\n", ppid);
-    printf("rss = %ld\n", rss);
+    //printf("rss = %ld\n", rss);
 
     int ret = fscanf(statFile, "%lld ", &rss);
     
-    for (int i = 1; i < 24; i++) {
+    for (int i = 6; i < 24; i++) {
         ret = fscanf(statFile, "%lld ", &rss);
         if (i == 23) {
             printf("rss: %d\n", rss);
