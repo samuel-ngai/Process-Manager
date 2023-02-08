@@ -270,10 +270,10 @@ char** readStatusFile(char* procPath) {
                 //printf("data = %s\n", data[iterator]);
                 //iterator++;
 
-                if( iterator == 39 ) {
-                    printf("data[39] is %s\n", data[iterator]);
-                } else if(iterator == 40) {
-                    printf("data[40] is %s\n", data[iterator]);
+                if( iterator == 78 ) {
+                    printf("data[39] is %s\n", data[78]);
+                } else if(iterator == 80) {
+                    printf("data[40] is %s\n", data[80]);
                 }
                 iterator++;
             }
