@@ -201,6 +201,7 @@ char* readStatFile(char* procPath) {
     printf("comm = %s\n", comm);
     printf("state = %c\n", state);
     printf("parent pid = %d\n", ppid);
+    char *ptr;
     //printf("rss = %ld\n", rss);
 
     int ret = fscanf(statFile, "%lld ", &value);
@@ -208,10 +209,12 @@ char* readStatFile(char* procPath) {
     for (int i = 1; i < 24; i++) {
         ret = fscanf(statFile, "%lld ", &value);
         if(i == 15) {
+            value = strtoul(value, &ptr, 10);
             value = value / sysconf(_SC_CLK_TCK);
             printf("utime: %ld\n", value);
         }
         if(i == 16) {
+            value =  strtoul(value, &ptr, 10);
             value = value / sysconf(_SC_CLK_TCK);
             printf("stime: %ld\n", value);
         }
