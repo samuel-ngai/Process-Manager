@@ -212,14 +212,14 @@ char* readStatFile(char* procPath) {
             // long unsigned int utime = strtoul(value, &ptr, 10);
             // utime = utime / sysconf(_SC_CLK_TCK);
             //value = strtoul(value, &ptr, 10);
-            value = value / sysconf(_SC_CLK_TCK);
+            //value = value / sysconf(_SC_CLK_TCK);
             printf("utime: %ld\n", value);
         }
         if(i == 16) {
             // long unsigned int stime = strtoul(value, &ptr, 10);
             // stime = stime / sysconf(_SC_CLK_TCK);
             //value = strtoul(value, &ptr, 10);
-            value = value / sysconf(_SC_CLK_TCK);
+            //value = value / sysconf(_SC_CLK_TCK);
             printf("stime: %ld\n", value);
         }
         if (i == 23) {
