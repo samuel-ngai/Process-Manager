@@ -286,6 +286,13 @@ char** readStatusFile(char* procPath) {
     //     printf("voluntary context switches: %s\n", data[39]);
     //     printf("nonvoluntary context switches: %s\n", data[40]);
 
+    //     fclose(statusFile);
+    // }  else {
+    //     printf("Could not read status file\n");
+    //     return NULL;
+    // }
+    // printf("finish reading file\n");
+
     char statusContents[128][128];
     if(statusFile != NULL) {
         int i = 0;
@@ -312,13 +319,8 @@ char** readStatusFile(char* procPath) {
         //     }
         // }
 
-        
-    //     fclose(statusFile);
-    // }  else {
-    //     printf("Could not read status file\n");
-    //     return NULL;
-    // }
-    // printf("finish reading file\n");
+
+    
     // //printf("%s", data[1]);
     return *data;
 }
