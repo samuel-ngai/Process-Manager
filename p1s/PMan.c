@@ -206,7 +206,7 @@ char* readStatFile(char* procPath) {
 
     int ret = fscanf(statFile, "%lld ", &value);
     
-    for (int i = 1; i < 24; i++) {
+    for (int i = 1; i < 25; i++) {
         ret = fscanf(statFile, "%lld ", &value);
         if(i == 15) {
             // long unsigned int utime = strtoul(value, &ptr, 10);
@@ -222,7 +222,7 @@ char* readStatFile(char* procPath) {
             //value = value / sysconf(_SC_CLK_TCK);
             printf("stime: %ld\n", value);
         }
-        if (i == 23) {
+        if (i == 24) {
             printf("rss: %ld\n", value);
         }
 
