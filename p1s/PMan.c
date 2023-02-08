@@ -251,6 +251,7 @@ char** readStatusFile(char* procPath) {
             //printf("data  = %s\n", data[0]);
             while(token != NULL) {
                 //printf("data = %s\n", data[iterator]);
+                printf("token is not null\n");
                 token = strtok(NULL, " ");
                 printf("%s\n", token);
                 data[iterator] = token;
