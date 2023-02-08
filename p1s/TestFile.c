@@ -3,12 +3,12 @@
 #include <stdlib.h>
 
 int main(int argc, char* argv[]) {
-    printf("SUp doggybitch\n");
+    printf("Before first sleep\n");
     sleep(3);
-    printf("lingui sauce\n");
+    printf("Before second sleep\n");
     sleep(10);
-    printf("lol gg?\n");
+    printf("Before third sleep\n");
     sleep(3);
-    printf("but sleep again\n");
+    printf("Before before exit\n");
     exit(0);
 }
