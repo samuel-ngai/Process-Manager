@@ -259,7 +259,7 @@ char** readStatusFile(char* procPath) {
             char* token = strtok(fileContents, " ");
             printf("%s", token);
             data[iterator] = token;
-            int i = 1;
+            //int i = 1;
             //printf("data  = %s\n", data[0]);
             while(token != NULL) {
                 //printf("data = %s\n", data[iterator]);
@@ -278,7 +278,11 @@ char** readStatusFile(char* procPath) {
                 iterator++;
             }
         }
-
+        printf("data is \n");
+        for(int i = 0; i<128; i++) {
+            printf("%s", data[i]);
+        }
+        printf("\n");
         printf("voluntary context switches: %s\n", data[39]);
         printf("nonvoluntary context switches: %s\n", data[40]);
 
