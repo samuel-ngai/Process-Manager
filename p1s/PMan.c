@@ -260,6 +260,9 @@ char** readStatusFile(char* procPath) {
             }
         }
 
+        printf("voluntary context switches: %s\n", data[39]);
+        printf("nonvoluntary context switches: %s\n", data[40]);
+
         
 
         // while(fgets(fileContents, sizeof(fileContents)-1, statusFile) !=  NULL) {
@@ -330,7 +333,7 @@ void pstat(pid_t PID) {
         statData[127] = readStatFile(stat);
         statusData[127] = *readStatusFile(status);
         
-        printf("%s\n", statData);
+        //printf("%s\n", statData);
 
         printf("here\n");
         //printf("comm: \t%s\n", statData[1]);
