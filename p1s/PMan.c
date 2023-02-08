@@ -209,14 +209,14 @@ char* readStatFile(char* procPath) {
     for (int i = 1; i < 24; i++) {
         ret = fscanf(statFile, "%lld ", &value);
         if(i == 15) {
-            //value = strtoul(value, &ptr, 10);
-            value = value / sysconf(_SC_CLK_TCK);
-            printf("utime: %ld\n", value);
+            long unsigned int utime = strtoul(value, &ptr, 10);
+            utime = utime / sysconf(_SC_CLK_TCK);
+            printf("utime: %ld\n", utime);
         }
         if(i == 16) {
-            //value =  strtoul(value, &ptr, 10);
-            value = value / sysconf(_SC_CLK_TCK);
-            printf("stime: %ld\n", value);
+            long unsigned int stime = strtoul(value, &ptr, 10);
+            stime = stime / sysconf(_SC_CLK_TCK);
+            printf("stime: %ld\n", stime);
         }
         if (i == 23) {
             printf("rss: %ld\n", value);
