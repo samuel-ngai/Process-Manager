@@ -280,7 +280,7 @@ char** readStatusFile(char* procPath) {
         }
         printf("data is \n");
         for(int i = 0; i<128; i++) {
-            printf("%s", data[i]);
+            printf("%d %s\n", i, data[i]);
         }
         printf("\n");
         printf("voluntary context switches: %s\n", data[39]);
