@@ -251,7 +251,7 @@ char** readStatusFile(char* procPath) {
             while(token != NULL) {
                 token = strtok(NULL, " ");
                 printf("%s \n", token);
-                data[iterator] = token;
+                data[iterator] = *token;
                 printf("data = %s\n", data[iterator]);
                 iterator++;
             }
@@ -275,7 +275,7 @@ char** readStatusFile(char* procPath) {
         return NULL;
     }
     printf("finish reading file\n");
-    printf("%s", data[1]);
+    //printf("%s", data[1]);
     return *data;
 }
 
