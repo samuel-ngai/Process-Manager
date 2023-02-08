@@ -197,35 +197,50 @@ char* readStatFile(char* procPath) {
     int ppid; 
     long unsigned int value;
     long rss;
-    fscanf(statFile, "%d %s %c %d", &unused, comm, &state, &ppid);
-    printf("comm = %s\n", comm);
-    printf("state = %c\n", state);
-    printf("parent pid = %d\n", ppid);
-    char* ptr;
-    //printf("rss = %ld\n", rss);
+    // fscanf(statFile, "%d %s %c %d", &unused, comm, &state, &ppid);
+    // printf("comm = %s\n", comm);
+    // printf("state = %c\n", state);
+    // printf("parent pid = %d\n", ppid);
+    // char* ptr;
+    // //printf("rss = %ld\n", rss);
 
-    int ret = fscanf(statFile, "%lld ", &value);
+    // int ret = fscanf(statFile, "%lld ", &value);
     
-    for (int i = 1; i < 25; i++) {
-        ret = fscanf(statFile, "%lld ", &value);
-        if(i == 15) {
-            // long unsigned int utime = strtoul(value, &ptr, 10);
-            // utime = utime / sysconf(_SC_CLK_TCK);
-            //value = strtoul(value, &ptr, 10);
-            //value = value / sysconf(_SC_CLK_TCK);
-            printf("utime: %ld\n", value);
+    // for (int i = 1; i < 25; i++) {
+    //     ret = fscanf(statFile, "%lld ", &value);
+    //     if(i == 15) {
+    //         // long unsigned int utime = strtoul(value, &ptr, 10);
+    //         // utime = utime / sysconf(_SC_CLK_TCK);
+    //         //value = strtoul(value, &ptr, 10);
+    //         //value = value / sysconf(_SC_CLK_TCK);
+    //         printf("utime: %ld\n", value);
+    //     }
+    //     if(i == 16) {
+    //         // long unsigned int stime = strtoul(value, &ptr, 10);
+    //         // stime = stime / sysconf(_SC_CLK_TCK);
+    //         //value = strtoul(value, &ptr, 10);
+    //         //value = value / sysconf(_SC_CLK_TCK);
+    //         printf("stime: %ld\n", value);
+    //     }
+    //     if (i == 24) {
+    //         printf("rss: %ld\n", value);
+    //     }
+    // 
+    // }
+    for(int i = 1; i<25; i++)  {
+        fscanf(statFile, "%s", value);
+        if(i == 1)  {
+            printf("comm: %s\n", value);
         }
-        if(i == 16) {
-            // long unsigned int stime = strtoul(value, &ptr, 10);
-            // stime = stime / sysconf(_SC_CLK_TCK);
-            //value = strtoul(value, &ptr, 10);
-            //value = value / sysconf(_SC_CLK_TCK);
-            printf("stime: %ld\n", value);
+        if(i == 2) {
+            printf("state = %s\n", value);
         }
-        if (i == 24) {
-            printf("rss: %ld\n", value);
+        if(i == 3) {
+            printf("parent PID = %s\n", value);
         }
-
+        if(i ==  24) {
+            printf("rss: %s\n", value);
+        }
     }
 
     fclose(statFile);
