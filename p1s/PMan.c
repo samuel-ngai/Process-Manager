@@ -263,17 +263,17 @@ char** readStatusFile(char* procPath) {
             //printf("data  = %s\n", data[0]);
             while(token != NULL) {
                 //printf("data = %s\n", data[iterator]);
-                printf("token is not null\n");
+                //printf("token is not null\n");
                 token = strtok(NULL, " ");
                 //printf("%s\n", token);
                 data[iterator] = token;
                 //printf("data = %s\n", data[iterator]);
                 iterator++;
 
-                if( i == 39 ) {
-                    printf("data[39] is %s\n", data[39]);
+                if( iterator == 39 ) {
+                    printf("data[39] is %s\n", data[iterator]);
                 } else if(i == 40) {
-                    printf("data[40] is %s\n", data[40]);
+                    printf("data[40] is %s\n", data[iterator]);
                 }
                 i++;
             }
