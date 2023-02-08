@@ -315,8 +315,8 @@ char** readStatusFile(char* procPath) {
     } else {
         printf("Error\n");
     }
-    printf("voluntary ctxt switches: %s\n", statusContents[39]);
-    printf("nonvoluntary ctxt switches: %s\n", statusContents[40]);
+    printf("voluntary ctxt switches: %s\n", statusContents[57]);
+    printf("nonvoluntary ctxt switches: %s\n", statusContents[58]);
 
         
 
