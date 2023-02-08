@@ -246,11 +246,12 @@ char** readStatusFile(char* procPath) {
         int dataSize = sizeof(fileContents)-1;
         while(fgets(fileContents, dataSize, statusFile) != NULL) {
             char* token = strtok(fileContents, " ");
-            printf("%s ", token);
+            printf("%s", token);
             data[iterator] = token;
+            printf("data  = %s\n", data[iterator]);
             while(token != NULL) {
                 token = strtok(NULL, " ");
-                printf("%s \n", token);
+                printf("%s\n", token);
                 data[iterator] = token;
                 printf("data = %s\n", data[iterator]);
                 iterator++;
