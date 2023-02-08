@@ -204,7 +204,7 @@ char* readStatFile(char* procPath) {
 
     int ret = fscanf(statFile, "%lld ", &rss);
     
-    for (int i = 6; i < 24; i++) {
+    for (int i = 1; i < 24; i++) {
         ret = fscanf(statFile, "%lld ", &rss);
         if (i == 23) {
             printf("rss: %d\n", rss);
