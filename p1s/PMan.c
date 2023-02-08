@@ -201,6 +201,17 @@ char* readStatFile(char* procPath) {
     printf("state = %c\n", state);
     printf("parent pid = %d\n", ppid);
     printf("rss = %ld\n", rss);
+
+    int ret = fscanf(statFile, "%lld ", &rss);
+    
+    for (int i = 4; i < 24; i++) {
+        ret = fscanf(statFile, "%lld ", &rss);
+        if (i == 23) {
+            printf("rss: %d\n", rss);
+        }
+
+    }
+
     fclose(statFile);
     
     // if(statFile != NULL) {
@@ -330,9 +341,12 @@ void pstat(pid_t PID) {
         char* statData[128];
         char* statusData[128];
 
-        statData[127] = readStatFile(stat);
-        statusData[127] = *readStatusFile(status);
+        //statData[127] = readStatFile(stat);
+        //statusData[127] = *readStatusFile(status);
         
+        readStatFile(stat);
+        readStatusFile(status);
+
         //printf("%s\n", statData);
 
         printf("here\n");
