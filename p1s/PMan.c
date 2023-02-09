@@ -176,7 +176,7 @@ void readStatFile(char* procPath) {
         return;
     } 
     int i = 0;
-    while((read = getline(&line, &len, statFile)) != -1) {
+    while((read = getline(&line, &len, statFile)) != NULL) {
 
         if(i == 1) {
             data = strtok(line, " ");
@@ -221,8 +221,7 @@ void readStatusFile(char* procPath) {
         printf("Failed to access file\n");
     } 
     int i = 0;
-        //char data[52];
-    while((read = getline(&line, &len, statusFile)) != -1) {
+    while((read = getline(&line, &len, statusFile)) != NULL) {
         if(i == 53) {
             printf("%s", line);
         }
