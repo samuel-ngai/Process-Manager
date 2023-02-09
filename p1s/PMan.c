@@ -228,12 +228,13 @@ char* readStatFile(char* procPath) {
     // 
     // }
    ssize_t read;
+   ssize_t len = 0;
     char* line = NULL;
    if(statFile == NULL) {
        printf("Failed to access file\n");
    } 
    int i = 0;
-   while((read = getline(&line, 128, statFile)) != NULL) {
+   while((read = getline(&line, &len, statFile)) != NULL) {
        if(i == 0) {
            printf("comm: %s\n", line);
        }
