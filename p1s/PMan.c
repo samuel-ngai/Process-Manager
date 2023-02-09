@@ -243,6 +243,7 @@ char* readStatFile(char* procPath) {
        if(i == 24) {
            printf("rss: %s\n", line);
        }
+       i++;
    }
 
     fclose(statFile);
