@@ -250,6 +250,7 @@ char* readStatFile(char* procPath) {
         printf("%s\n", line);
         if(i == 1) {
             data = strtok(line, " ");
+            break;
         }
         i++;
 
