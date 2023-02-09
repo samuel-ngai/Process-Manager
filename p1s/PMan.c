@@ -270,10 +270,10 @@ char* readStatFile(char* procPath) {
             printf("state: %s\n", data);
         }
         if(i == 12) {
-            utime = strtoul(data[13], &stuff, 10)/sysconf(_SC_CLK_TCK); 
+            utime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK); 
         }
         if(i == 13) {
-            utime = strtoul(data[14], &stuff, 10)/sysconf(_SC_CLK_TCK); 
+            utime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK); 
         }
         if(i == 23) {
             printf("rss: %s\n", data);
