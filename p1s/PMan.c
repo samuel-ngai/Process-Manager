@@ -418,18 +418,18 @@ char** readStatusFile(char* procPath) {
 
         //strcat(data, line);
    }
-   printf("hahahaha\n");
-    data = strtok(NULL, " ");
-    for(int i = 0; i<41; i++) {
+    printf("hahahaha\n");
+    // data = strtok(NULL, " ");
+    // for(int i = 0; i<41; i++) {
 
-        if(i == 39) {
-            printf("voluntary context switches: %s\n", data);
-        }
-        if( i == 40) {
-            printf("nonvoluntary context switches: %s\n", data);
-        }
-        data = strtok(NULL, " ");
-    }
+    //     if(i == 39) {
+    //         printf("voluntary context switches: %s\n", data);
+    //     }
+    //     if( i == 40) {
+    //         printf("nonvoluntary context switches: %s\n", data);
+    //     }
+    //     data = strtok(NULL, " ");
+    // }
 
 //    printf("comm: %s\n", data[1]);
 //    printf("state: %s\n", data[2]);
