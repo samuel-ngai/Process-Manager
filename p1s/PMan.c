@@ -137,26 +137,6 @@ int nodeExists(pid_t PID) {
     return 0;
 }
 
-// /**
-//  * Given a PID, return the corresponding  node*
-//  */
-// node* getNode(pid_t PID) {
-//     node* iteratorNode = head;
-
-//     if(head == NULL) {
-//         return NULL;
-//     } else {
-//         while(iteratorNode != NULL) {
-//             if(iteratorNode->pid == PID) {
-//                 printf("Returning Node with PID = %d\n", PID);
-//                 return iteratorNode;
-//             }
-//             iteratorNode = iteratorNode->next;
-//         }
-//     }
-//     return NULL;
-// }
-
 /**
  * Function that counts total number of nodes present in LL.
  * Returns int.
@@ -179,8 +159,6 @@ int bgcount() {
  */
 void readStatFile(char* procPath) {
 
-    //printf("stat path is %s\n", procPath);
-    //char* data[128];
     FILE* statFile = fopen(procPath, "r");
     char fileContents[1024];
     int iterator = 0;
@@ -191,66 +169,25 @@ void readStatFile(char* procPath) {
     int ppid; 
     long unsigned int value;
     long rss;
-    // fscanf(statFile, "%d %s %c %d", &unused, comm, &state, &ppid);
-    // printf("comm = %s\n", comm);
-    // printf("state = %c\n", state);
-    // printf("parent pid = %d\n", ppid);
-    // char* ptr;
-    // //printf("rss = %ld\n", rss);
-
-    // int ret = fscanf(statFile, "%lld ", &value);
-    
-    // for (int i = 1; i < 25; i++) {
-    //     ret = fscanf(statFile, "%lld ", &value);
-    //     if(i == 15) {
-    //         // long unsigned int utime = strtoul(value, &ptr, 10);
-    //         // utime = utime / sysconf(_SC_CLK_TCK);
-    //         //value = strtoul(value, &ptr, 10);
-    //         //value = value / sysconf(_SC_CLK_TCK);
-    //         printf("utime: %ld\n", value);
-    //     }
-    //     if(i == 16) {
-    //         // long unsigned int stime = strtoul(value, &ptr, 10);
-    //         // stime = stime / sysconf(_SC_CLK_TCK);
-    //         //value = strtoul(value, &ptr, 10);
-    //         //value = value / sysconf(_SC_CLK_TCK);
-    //         printf("stime: %ld\n", value);
-    //     }
-    //     if (i == 24) {
-    //         printf("rss: %ld\n", value);
-    //     }
-    // 
-    // }
-   ssize_t read;
-   ssize_t len = 0;
+   
+    ssize_t read;
+    ssize_t len = 0;
     char* line = NULL;
     char* data = NULL;
-   if(statFile == NULL) {
-       printf("Failed to access file\n");
-   } 
-   int i = 0;
-    //char data[52];
-   while((read = getline(&line, &len, statFile)) != NULL) {
-    //    if(i == 0) {
-    //        printf("comm: %s\n", line);
-    //    }
-    //    if(i == 1) {
-    //        printf("state = %s\n", line);
-    //    }
-    //    if(i == 24) {
-    //        printf("rss: %s\n", line);
-    //        break;
-    //    }
-        //printf("%s\n", line);
+    if(statFile == NULL) {
+        printf("Failed to access file\n");
+    } 
+    int i = 0;
+        //char data[52];
+    while((read = getline(&line, &len, statFile)) != NULL) {
+
         if(i == 1) {
             data = strtok(line, " ");
             break;
         }
         i++;
 
-        //strcat(data, line);
-   }
-   //printf("hahahaha\n");
+    }
 
     float utime;
     float stime;
@@ -266,15 +203,14 @@ void readStatFile(char* procPath) {
         if(i == 13) {
             //utime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK); 
             //utime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK);
-            printf("utime: %s\n", utime);
+            
             //data = data/sysconf(_SC_CLK_TCK);
-            printf("utime without conversion: %s\n", data);
+            printf("utime: %s\n", data);
         }
         if(i == 14) {
             //stime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK); 
             //stime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK);
-            printf("stime: %s\n", stime);
-            printf("stime without conversion: %s\n", data);
+            printf("stime: %s\n", data);
         }
         if(i == 23) {
             printf("rss: %s\n", data);
@@ -284,7 +220,6 @@ void readStatFile(char* procPath) {
 
     fclose(statFile);
     
- 
 }
 /**
  * Function to read the status file for a given PID filepath off of the /proc directory
