@@ -623,7 +623,7 @@ void inputHandler() {
             printf("Please enter a valid PID\n");
         } else {
             pstat(atoi(token));
-
+            printf("bingbing\n");
         }
         
 
