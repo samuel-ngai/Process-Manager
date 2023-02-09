@@ -408,9 +408,11 @@ char** readStatusFile(char* procPath) {
     //        break;
     //    }
         printf("%s\n", line);
-        if(i == 1) {
-            data = strtok(line, " ");
-            break;
+        if(i == 39) {
+            printf("%s\n", line);
+        }
+        if(i == 40) {
+            printf("%s\n", line);
         }
         i++;
 
