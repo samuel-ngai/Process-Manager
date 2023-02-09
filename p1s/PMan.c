@@ -258,8 +258,8 @@ char* readStatFile(char* procPath) {
    }
    printf("hahahaha\n");
 
-    for(int i = 0; i<24; i++) {
-        data = strtok(NULL, " ");
+    for(int i = 0; i<25; i++) {
+
         if(i == 1) {
             printf("comm: %s\n", data);
         }
@@ -269,6 +269,7 @@ char* readStatFile(char* procPath) {
         if(i == 24) {
             printf("rss; %s\n", data);
         }
+        data = strtok(NULL, " ");
     }
 
 //    printf("comm: %s\n", data[1]);
