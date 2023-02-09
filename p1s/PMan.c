@@ -413,6 +413,10 @@ void updateStatus() {
 /**
  * Main function to initialize everything.
  * 
+ * If the input given by the user is empty, then the program
+ * will prompt the user again for a non-empty input, and pass it
+ * to the inputHandler
+ * 
  * inputHandler() handles the user input, and
  * executes the corresponding commands with helper functions.
  * 
