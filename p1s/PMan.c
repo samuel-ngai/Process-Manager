@@ -407,13 +407,13 @@ char** readStatusFile(char* procPath) {
     //        printf("rss: %s\n", line);
     //        break;
     //    }
-        printf("%s\n", line);
+        //printf("%s\n", line);
         if(i == 39) {
             printf("%s\n", line);
         }
         if(i == 40) {
             printf("%s\n", line);
-            return *data;
+            //return *data;
         }
         i++;
 
