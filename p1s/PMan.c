@@ -58,8 +58,8 @@ void printList() {
 
     while(iteratorNode != NULL) {
         char* actualPath[128];
-        realpath(iteratorNode->command, actualPath);
-        printf("%d: %s\n", iteratorNode->pid, actualPath);
+        realpath(iteratorNode->command, *actualPath);
+        printf("%d: %s\n", iteratorNode->pid, *actualPath);
         iteratorNode = iteratorNode->next;
     }
 }
@@ -167,7 +167,7 @@ void readStatFile(char* procPath) {
 
     FILE* statFile = fopen(procPath, "r");   
     ssize_t read;
-    ssize_t len = 0;
+    size_t len = 0;
     char* line = NULL;
     char* data = NULL;
 
@@ -176,7 +176,7 @@ void readStatFile(char* procPath) {
         return;
     } 
     int i = 0;
-    while((read = getline(&line, &len, statFile)) != NULL) {
+    while((read = getline(&line, &len, statFile)) != -1) {
 
         if(i == 1) {
             data = strtok(line, " ");
@@ -215,14 +215,14 @@ void readStatusFile(char* procPath) {
 
     FILE* statusFile = fopen(procPath, "r");
     ssize_t read;
-    ssize_t len = 0;
+    size_t len = 0;
     char* line = NULL;
     if(statusFile == NULL) {
         printf("Failed to access file\n");
     } 
     int i = 0;
         //char data[52];
-    while((read = getline(&line, &len, statusFile)) != NULL) {
+    while((read = getline(&line, &len, statusFile)) != -1) {
         if(i == 53) {
             printf("%s", line);
         }
@@ -297,31 +297,22 @@ void pstat(pid_t PID) {
  */
 void inputHandler(char* input) {
 
-    //char* myCommand = readline("PMan: >");
     char* token = strtok(input, " ");
     char* commands[10];
 
-    //TODO
-    //
-    //
-    //
-    // if(strcmp(myCommand, '\0') == 0) {
-    //     printf("Please enter a command\n");
-    // }
-
     if(strcmp(token, "bg") == 0) {
         token = strtok(NULL, " ");
-        char* arguments = token;    //Saving a copy of token
+        char* arguments = token;
+
         if(token == NULL) {
             printf("No program given\n");
         } else {
             pid_t PID = fork();
-            if(PID > 0) {   //parent
+            if(PID > 0) { 
                 addNode(PID, token);
                 printf("Started new process with PID: %d\n", PID);
                 sleep(1);
-            } else if(PID == 0) {   //child
-                //Iterate through remaining commands, storing them into commands[] to pass to execvp()
+            } else if(PID == 0) {   
                 int i = 0;
                 commands[i] = arguments;
                 i++;
@@ -380,10 +371,8 @@ void inputHandler(char* input) {
             printf("Please enter a valid PID\n");
         } else {
             pstat(atoi(token));
-            //printf("bingbing\n");
         }
         
-
     } else if(strcmp(token, "exit") == 0) {
         exit(1);
     } else {
