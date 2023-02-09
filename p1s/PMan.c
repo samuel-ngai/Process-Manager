@@ -413,6 +413,7 @@ char** readStatusFile(char* procPath) {
         }
         if(i == 40) {
             printf("%s\n", line);
+            break;
         }
         i++;
 
