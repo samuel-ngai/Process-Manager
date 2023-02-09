@@ -248,11 +248,12 @@ char* readStatFile(char* procPath) {
     //        break;
     //    }
         printf("%s\n", line);
-        
-        data = strtok(line, " ");
+        if(i == 1) {
+            data = strtok(line, " ");
+        }
+        i++;
 
         //strcat(data, line);
-       i++;
    }
    printf("hahahaha\n");
 
