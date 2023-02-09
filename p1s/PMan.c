@@ -15,7 +15,7 @@
  * A linked list data structure to store our processes and navigate through them.
  * PID: Process ID 
  * command: Name of program 
- * isRunning:  True or false if its currently running or not
+ * isRunning: True or false if its currently running or not
  * next: reference to next node;
  */
 typedef struct node {
