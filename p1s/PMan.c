@@ -233,22 +233,22 @@ char* readStatFile(char* procPath) {
    if(statFile == NULL) {
        printf("Failed to access file\n");
    } 
-//    int i = 0;
-//    while((read = getline(&line, &len, statFile)) != NULL) {
-//        if(i == 0) {
-//            printf("comm: %s\n", line);
-//        }
-//        if(i == 1) {
-//            printf("state = %s\n", line);
-//        }
-//        if(i == 24) {
-//            printf("rss: %s\n", line);
-//            break;
-//        }
-//        i++;
-//    }
-    read = getline(&line, &len, statFile);
-    printf("%s\n", read);
+   int i = 0;
+   while((read = getline(&line, &len, statFile)) != NULL) {
+       if(i == 0) {
+           printf("comm: %s\n", line[1]);
+       }
+       if(i == 1) {
+           printf("state = %s\n", line[2]);
+       }
+       if(i == 24) {
+           printf("rss: %s\n", line[24]);
+           break;
+       }
+       i++;
+   }
+ 
+    printf("%s\n", line);
     fclose(statFile);
     
     // if(statFile != NULL) {
