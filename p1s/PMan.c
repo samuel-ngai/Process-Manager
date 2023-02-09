@@ -288,104 +288,19 @@ void readStatFile(char* procPath) {
         data = strtok(NULL, " ");
     }
 
-//    printf("comm: %s\n", data[1]);
-//    printf("state: %s\n", data[2]);
-//    printf("rss: %s\n", data[24]);
- 
-    //printf("%s\n", line);
     fclose(statFile);
     
-    // if(statFile != NULL) {
-    //     printf("statfile is NOT null\n");
-    //     int dataSize = sizeof(fileContents)-1;
-    //     while(fgets(fileContents, dataSize, statFile) != NULL) {
-    //         char* token = strtok(fileContents, " ");
-    //         data[iterator] = &token;
-    //         while(token != NULL) {
-    //             data[iterator] = token;
-    //             token = strtok(NULL, " ");
-    //             iterator++;
-    //         }
-    //     }
-    //     fclose(statFile);
-    // } else {
-    //     printf("Could not read stat file \n");
-    //     return NULL;
-    // }
-    // printf("finish reading file\n");
-    
-    // for(int i = 0; i<iterator; i++) {
-
-    //     printf("%s", *data[i]);
-    // }
-    // printf("\n");
-
-    //return *data;
+ 
 }
 /**
  * Function to read the status file for a given PID filepath off of the /proc directory
  */
 void readStatusFile(char* procPath) {
 
-    //printf("status path is %s\n", procPath);
-    //char** data[128];
     FILE* statusFile = fopen(procPath, "r");
     char fileContents[1024];
 
-    // if(statusFile != NULL) {
-    //     printf("statusfile is NOT null\n");
-    //     int iterator = 0;
-    //     int dataSize = sizeof(fileContents)-1;
-    //     while(fgets(fileContents, dataSize, statusFile) != NULL) {
-    //         char* token = strtok(fileContents, " ");
-    //         printf("%s", token);
-    //         data[iterator] = token;
-    //         //int i = 1;
-    //         //printf("data  = %s\n", data[0]);
-    //         while(token != NULL) {
-    //             //printf("data = %s\n", data[iterator]);
-    //             //printf("token is not null\n");
-    //             token = strtok(NULL, " ");
-    //             //printf("%s\n", token);
-    //             data[iterator] = token;
-    //             //printf("data = %s\n", data[iterator]);
-    //             //iterator++;
-
-    //             if( iterator == 78 ) {
-    //                 printf("data[39] is %s\n", data[78]);
-    //             } else if(iterator == 80) {
-    //                 printf("data[40] is %s\n", data[80]);
-    //             }
-    //             iterator++;
-    //         }
-    //     }
-    //     printf("data is \n");
-    //     for(int i = 0; i<128; i++) {
-    //         printf("%d %s\n", i, data[i]);
-    //     }
-    //     printf("\n");
-    //     printf("voluntary context switches: %s\n", data[39]);
-    //     printf("nonvoluntary context switches: %s\n", data[40]);
-
-    //     fclose(statusFile);
-    // }  else {
-    //     printf("Could not read status file\n");
-    //     return NULL;
-    // }
-    // printf("finish reading file\n");
-
-    // char statusContents[128][128];
-    // if(statusFile != NULL) {
-    //     int i = 0;
-    //     while(fgets(statusContents[i], 128, statusFile) != NULL) {
-    //         i++;
-    //     }
-    //     fclose(statusFile);
-    // } else {
-    //     printf("Error\n");
-    // }
-    // printf("voluntary ctxt switches: %s\n", statusContents[57]);
-    // printf("nonvoluntary ctxt switches: %s\n", statusContents[58]);
+   
 
     ssize_t read;
    ssize_t len = 0;
@@ -397,65 +312,22 @@ void readStatusFile(char* procPath) {
    int i = 0;
     //char data[52];
    while((read = getline(&line, &len, statusFile)) != NULL) {
-    //    if(i == 0) {
-    //        printf("comm: %s\n", line);
-    //    }
-    //    if(i == 1) {
-    //        printf("state = %s\n", line);
-    //    }
-    //    if(i == 24) {
-    //        printf("rss: %s\n", line);
-    //        break;
-    //    }
-        //printf("%s\n", line);
+    
         if(i == 53) {
-            printf("%s\n", line);
+            printf("%s", line);
         }
         if(i == 54) {
-            printf("%s\n", line);
+            printf("%s", line);
             break;
-            //return *data;
+
         }
         i++;
 
-        //strcat(data, line);
+
    }
-    //printf("hahahaha\n");
-    // data = strtok(NULL, " ");
-    // for(int i = 0; i<41; i++) {
-
-    //     if(i == 39) {
-    //         printf("voluntary context switches: %s\n", data);
-    //     }
-    //     if( i == 40) {
-    //         printf("nonvoluntary context switches: %s\n", data);
-    //     }
-    //     data = strtok(NULL, " ");
-    // }
-
-//    printf("comm: %s\n", data[1]);
-//    printf("state: %s\n", data[2]);
-//    printf("rss: %s\n", data[24]);
- 
-    //printf("%s\n", line);
-    fclose(statusFile);
-    //printf("closedstatusfile\n");
-
-        // while(fgets(fileContents, sizeof(fileContents)-1, statusFile) !=  NULL) {
-        //     char* token = strtok(fileContents, " ");
-        //     strcat(data[0], token);
-        //     int iterator = 1;
-        //     while(token != NULL) {  
-        //         token =  strtok(NULL, " ");
-        //         data[iterator] = token; 
-        //         iterator++;
-        //     }
-        // }
-
-
     
-    // //printf("%s", data[1]);
-    //return *data;
+    fclose(statusFile);
+    
 }
 
 /**
