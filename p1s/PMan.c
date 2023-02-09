@@ -408,10 +408,10 @@ char** readStatusFile(char* procPath) {
     //        break;
     //    }
         //printf("%s\n", line);
-        if(i == 39) {
+        if(i == 38) {
             printf("%s\n", line);
         }
-        if(i == 40) {
+        if(i == 49) {
             printf("%s\n", line);
             //return *data;
         }
