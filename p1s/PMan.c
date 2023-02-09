@@ -156,6 +156,7 @@ int bgcount() {
 
 /**
  * Function that reads /proc/[PID]/stat file and prints out:
+ * 
  *  1. comm: The filename of the executable, in parentheses. 
  *  2. state: One of the following characters, indicating process state.
  *      R - Running
@@ -174,7 +175,7 @@ int bgcount() {
  *  4. stime: Amount of time that this process has been scheduled in kernel mode.
  *  5. rss: Resident set size: Number of pages the process has in real memory.
  *
- * Returns an error message if the FILE object is NULL
+ * Returns an error message if the FILE object is NULL.
  */
 void readStatFile(char* procPath) {
 
@@ -224,7 +225,7 @@ void readStatFile(char* procPath) {
  *  1. voluntary ctxt switches: Number of voluntary context switches
  *  2. nonvoluntary ctxt switches: Number of involuntary context switches.
  *  
- * Returns an error message if the FILE object is NULL
+ * Returns an error message if the FILE object is NULL.
  */
 void readStatusFile(char* procPath) {
 
@@ -415,7 +416,7 @@ void updateStatus() {
  * 
  * If the input given by the user is empty, then the program
  * will prompt the user again for a non-empty input, and pass it
- * to the inputHandler
+ * to the inputHandler.
  * 
  * inputHandler() handles the user input, and
  * executes the corresponding commands with helper functions.
