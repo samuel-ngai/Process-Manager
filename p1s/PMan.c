@@ -233,7 +233,7 @@ char* readStatFile(char* procPath) {
        printf("Failed to access file\n");
    } 
    int i = 0;
-   while((read = getline(&line, 0, statFile)) != -1) {
+   while((read = getline(&line, 0, statFile)) != NULL) {
        if(i == 0) {
            printf("comm: %s\n", line);
        }
