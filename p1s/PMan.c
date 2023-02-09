@@ -185,7 +185,7 @@ int bgcount() {
  */
 void readStatFile(char* procPath) {
 
-    printf("stat path is %s\n", procPath);
+    //printf("stat path is %s\n", procPath);
     //char* data[128];
     FILE* statFile = fopen(procPath, "r");
     char fileContents[1024];
@@ -256,7 +256,7 @@ void readStatFile(char* procPath) {
 
         //strcat(data, line);
    }
-   printf("hahahaha\n");
+   //printf("hahahaha\n");
 
     float utime;
     float stime;
@@ -327,7 +327,7 @@ void readStatFile(char* procPath) {
  */
 void readStatusFile(char* procPath) {
 
-    printf("status path is %s\n", procPath);
+    //printf("status path is %s\n", procPath);
     //char** data[128];
     FILE* statusFile = fopen(procPath, "r");
     char fileContents[1024];
@@ -420,7 +420,7 @@ void readStatusFile(char* procPath) {
 
         //strcat(data, line);
    }
-    printf("hahahaha\n");
+    //printf("hahahaha\n");
     // data = strtok(NULL, " ");
     // for(int i = 0; i<41; i++) {
 
@@ -439,7 +439,7 @@ void readStatusFile(char* procPath) {
  
     //printf("%s\n", line);
     fclose(statusFile);
-    printf("closedstatusfile\n");
+    //printf("closedstatusfile\n");
 
         // while(fgets(fileContents, sizeof(fileContents)-1, statusFile) !=  NULL) {
         //     char* token = strtok(fileContents, " ");
@@ -492,8 +492,8 @@ void pstat(pid_t PID) {
         sprintf(stat, "/proc/%d/stat", PID);
         sprintf(status, "/proc/%d/status", PID);
 
-        printf("stat = %s\n", stat);
-        printf("status = %s\n",status);
+        //printf("stat = %s\n", stat);
+        //printf("status = %s\n",status);
 
         char* fileContents[200];
         //FILE* statFile = fopen(stat, "r");
@@ -509,10 +509,10 @@ void pstat(pid_t PID) {
 
         //printf("%s\n", statData);
 
-        printf("here\n");
+        //printf("here\n");
         //printf("comm: \t%s\n", statData[1]);
         //printf("%s\n", statusData[1]);
-        printf("\n");
+        //printf("\n");
     } else {
         printf("Invalid PID\n");
     }
@@ -623,7 +623,7 @@ void inputHandler() {
             printf("Please enter a valid PID\n");
         } else {
             pstat(atoi(token));
-            printf("bingbing\n");
+            //printf("bingbing\n");
         }
         
 
