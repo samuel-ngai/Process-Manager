@@ -228,8 +228,8 @@ char* readStatFile(char* procPath) {
     // 
     // }
     for(int i = 1; i<25; i++)  {
-        fscanf(statFile, "%s", value);
-        printf("%s\n", value);
+        fscanf(statFile, "%s", &value);
+        printf("%s\n", &value);
         if(i == 1)  {
             printf("comm: %s\n", value);
         }
