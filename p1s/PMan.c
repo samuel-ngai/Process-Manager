@@ -230,11 +230,12 @@ char* readStatFile(char* procPath) {
    ssize_t read;
    ssize_t len = 0;
     char* line = NULL;
+    char* data = NULL;
    if(statFile == NULL) {
        printf("Failed to access file\n");
    } 
    int i = 0;
-    char data[52];
+    //char data[52];
    while((read = getline(&line, &len, statFile)) != NULL) {
     //    if(i == 0) {
     //        printf("comm: %s\n", line);
@@ -246,12 +247,28 @@ char* readStatFile(char* procPath) {
     //        printf("rss: %s\n", line);
     //        break;
     //    }
-        printf("%s\n", line[1]);
-        strcat(data, line);
+        printf("%s\n", line);
+        
+        data = strtok(line, " ");
+
+        //strcat(data, line);
        i++;
    }
    printf("hahahaha\n");
-   printf("%s\n", data);
+
+    for(int i = 0; i<24; i++) {
+        data = strtok(NULL, " ");
+        if(i == 1) {
+            printf("comm: %s\n", data);
+        }
+        if(i == 2) {
+            printf("state: %s\n", data);
+        }
+        if(i == 24) {
+            printf("rss; %s\n", data);
+        }
+    }
+
 //    printf("comm: %s\n", data[1]);
 //    printf("state: %s\n", data[2]);
 //    printf("rss: %s\n", data[24]);
