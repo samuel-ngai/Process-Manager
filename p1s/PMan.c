@@ -258,6 +258,9 @@ char* readStatFile(char* procPath) {
    }
    printf("hahahaha\n");
 
+    long unsigned int utime;
+    long unsigned int stime;
+    char* stuff;
     for(int i = 0; i<25; i++) {
 
         if(i == 1) {
@@ -266,8 +269,14 @@ char* readStatFile(char* procPath) {
         if(i == 2) {
             printf("state: %s\n", data);
         }
+        if(i == 12) {
+            utime = strtoul(data[13], &stuff, 10)/sysconf(_SC_CLK_TCK); 
+        }
+        if(i == 13) {
+            utime = strtoul(data[14], &stuff, 10)/sysconf(_SC_CLK_TCK); 
+        }
         if(i == 23) {
-            printf("rss; %s\n", data);
+            printf("rss: %s\n", data);
         }
         data = strtok(NULL, " ");
     }
@@ -312,7 +321,7 @@ char* readStatFile(char* procPath) {
 char** readStatusFile(char* procPath) {
 
     printf("status path is %s\n", procPath);
-    char** data[128];
+    //char** data[128];
     FILE* statusFile = fopen(procPath, "r");
     char fileContents[1024];
 
@@ -358,19 +367,70 @@ char** readStatusFile(char* procPath) {
     // }
     // printf("finish reading file\n");
 
-    char statusContents[128][128];
-    if(statusFile != NULL) {
-        int i = 0;
-        while(fgets(statusContents[i], 128, statusFile) != NULL) {
-            i++;
-        }
-        fclose(statusFile);
-    } else {
-        printf("Error\n");
-    }
-    printf("voluntary ctxt switches: %s\n", statusContents[57]);
-    printf("nonvoluntary ctxt switches: %s\n", statusContents[58]);
+    // char statusContents[128][128];
+    // if(statusFile != NULL) {
+    //     int i = 0;
+    //     while(fgets(statusContents[i], 128, statusFile) != NULL) {
+    //         i++;
+    //     }
+    //     fclose(statusFile);
+    // } else {
+    //     printf("Error\n");
+    // }
+    // printf("voluntary ctxt switches: %s\n", statusContents[57]);
+    // printf("nonvoluntary ctxt switches: %s\n", statusContents[58]);
 
+    ssize_t read;
+   ssize_t len = 0;
+    char* line = NULL;
+    char* data = NULL;
+   if(statusFile == NULL) {
+       printf("Failed to access file\n");
+   } 
+   int i = 0;
+    //char data[52];
+   while((read = getline(&line, &len, statusFile)) != NULL) {
+    //    if(i == 0) {
+    //        printf("comm: %s\n", line);
+    //    }
+    //    if(i == 1) {
+    //        printf("state = %s\n", line);
+    //    }
+    //    if(i == 24) {
+    //        printf("rss: %s\n", line);
+    //        break;
+    //    }
+        printf("%s\n", line);
+        if(i == 1) {
+            data = strtok(line, " ");
+            break;
+        }
+        i++;
+
+        //strcat(data, line);
+   }
+   printf("hahahaha\n");
+
+    for(int i = 0; i<41; i++) {
+
+        if(i == 1) {
+            printf("comm: %s\n", data);
+        }
+        if(i == 2) {
+            printf("state: %s\n", data);
+        }
+        if(i == 23) {
+            printf("rss: %s\n", data);
+        }
+        data = strtok(NULL, " ");
+    }
+
+//    printf("comm: %s\n", data[1]);
+//    printf("state: %s\n", data[2]);
+//    printf("rss: %s\n", data[24]);
+ 
+    //printf("%s\n", line);
+    fclose(statusFile);
         
 
         // while(fgets(fileContents, sizeof(fileContents)-1, statusFile) !=  NULL) {
