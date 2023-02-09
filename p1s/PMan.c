@@ -417,7 +417,7 @@ char** readStatusFile(char* procPath) {
         //strcat(data, line);
    }
    printf("hahahaha\n");
-
+    data = strtok(NULL, " ");
     for(int i = 0; i<41; i++) {
 
         if(i == 39) {
