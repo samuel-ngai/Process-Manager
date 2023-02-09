@@ -439,7 +439,7 @@ char** readStatusFile(char* procPath) {
  
     //printf("%s\n", line);
     fclose(statusFile);
-        
+    printf("closedstatusfile\n");
 
         // while(fgets(fileContents, sizeof(fileContents)-1, statusFile) !=  NULL) {
         //     char* token = strtok(fileContents, " ");
