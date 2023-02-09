@@ -155,13 +155,26 @@ int bgcount() {
 }
 
 /**
- * Function to read the stat file for a given PID filepath off of the /proc directory
- * prints out:
- *  - comm
- *  - state
- *  - utime
- *  - stime
- *  - rss
+ * Function that reads /proc/[PID]/stat file and prints out:
+ *  1. comm: The filename of the executable, in parentheses. 
+ *  2. state: One of the following characters, indicating process state.
+ *      R - Running
+ *      S - Sleeping in an interruptible wait
+ *      D - Waiting in uninterruptible disk sleep
+ *      Z - Zombie
+ *      T - Stopped
+ *      t - Tracing stop
+ *      W - Paging
+ *      X - Dead
+ *      x - Dead
+ *      K - Wakekill
+ *      W - Waking
+ *      P - Parked
+ *  3. utime: Amount of time that this process has been scheduled in user mode.
+ *  4. stime: Amount of time that this process has been scheduled in kernel mode.
+ *  5. rss: Resident set size: Number of pages the process has in real memory.
+ *
+ * Returns an error message if the FILE object is NULL
  */
 void readStatFile(char* procPath) {
 
@@ -206,10 +219,12 @@ void readStatFile(char* procPath) {
 }
 
 /**
- * Function to read the status file for a given PID filepath off of the /proc directory
- * prints out:
- *  - voluntary context switches
- *  - nonvoluntary context switches
+ * Function that reads the /proc/[PID]/status file and prints out:
+ * 
+ *  1. voluntary ctxt switches: Number of voluntary context switches
+ *  2. nonvoluntary ctxt switches: Number of involuntary context switches.
+ *  
+ * Returns an error message if the FILE object is NULL
  */
 void readStatusFile(char* procPath) {
 
@@ -235,29 +250,9 @@ void readStatusFile(char* procPath) {
 }
 
 /**
- * Function that prints out:
- * comm: The filename of the executable, in parentheses. 
- * state; One of the following characters, indicating process state.
- *      R - Running
- *      S - Sleeping in an interruptible wait
- *      D - Waiting in uninterruptible disk sleep
- *      Z - Zombie
- *      T - Stopped
- *      t - Tracing stop
- *      W - Paging
- *      X - Dead
- *      x - Dead
- *      K - Wakekill
- *      W - Waking
- *      P - Parked
- * utime: Amount of time that this process has been scheduled in user mode.
- * stime: Amount of time that this process has been scheduled in kernel mode.
- * rss: Resident set size: Number of pages the process has in real memory.
- * voluntary ctxt switches: Number of voluntary context switches
- * nonvoluntary ctxt switches: Number of involuntary context switches.
- *
- * Returns an error message when PID does not exist:
- * "Error: Process *PID* does not exist"
+ * Function that checks if given a valid PID, sends the corresponding 
+ * /proc/[PID]/stat & /proc/[PID]/status paths to readStatFile() & 
+ * readStatusFile() for parsing and printing.
  */
 void pstat(pid_t PID) {
     if(nodeExists(PID)) {
