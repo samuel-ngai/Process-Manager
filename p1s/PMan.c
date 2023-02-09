@@ -227,22 +227,23 @@ char* readStatFile(char* procPath) {
     //     }
     // 
     // }
-    for(int i = 1; i<25; i++)  {
-        fscanf(statFile, "%s", &value);
-        printf("%s\n", &value);
-        if(i == 1)  {
-            printf("comm: %s\n", value);
-        }
-        if(i == 2) {
-            printf("state = %s\n", value);
-        }
-        if(i == 3) {
-            printf("parent PID = %s\n", value);
-        }
-        if(i ==  24) {
-            printf("rss: %s\n", value);
-        }
-    }
+   ssize_t read;
+    char* line = NULL;
+   if(statFile == NULL) {
+       printf("Failed to access file\n");
+   } 
+   int i = 0;
+   while((read = getline(&line, 0, statFile)) != -1) {
+       if(i == 0) {
+           printf("comm: %s\n", line);
+       }
+       if(i == 1) {
+           printf("state = %s\n", line);
+       }
+       if(i == 24) {
+           printf("rss: %s\n", line);
+       }
+   }
 
     fclose(statFile);
     
