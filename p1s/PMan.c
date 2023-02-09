@@ -246,7 +246,7 @@ char* readStatFile(char* procPath) {
     //        printf("rss: %s\n", line);
     //        break;
     //    }
-        printf("%s\n", line);
+        printf("%s\n", line[1]);
         strcat(data, line);
        i++;
    }
