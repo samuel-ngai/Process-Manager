@@ -258,8 +258,8 @@ char* readStatFile(char* procPath) {
    }
    printf("hahahaha\n");
 
-    long unsigned int utime;
-    long unsigned int stime;
+    float utime;
+    float stime;
     char* stuff;
     for(int i = 0; i<25; i++) {
 
