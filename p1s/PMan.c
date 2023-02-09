@@ -137,25 +137,25 @@ int nodeExists(pid_t PID) {
     return 0;
 }
 
-/**
- * Given a PID, return the corresponding  node*
- */
-node* getNode(pid_t PID) {
-    node* iteratorNode = head;
+// /**
+//  * Given a PID, return the corresponding  node*
+//  */
+// node* getNode(pid_t PID) {
+//     node* iteratorNode = head;
 
-    if(head == NULL) {
-        return NULL;
-    } else {
-        while(iteratorNode != NULL) {
-            if(iteratorNode->pid == PID) {
-                printf("Returning Node with PID = %d\n", PID);
-                return iteratorNode;
-            }
-            iteratorNode = iteratorNode->next;
-        }
-    }
-    return NULL;
-}
+//     if(head == NULL) {
+//         return NULL;
+//     } else {
+//         while(iteratorNode != NULL) {
+//             if(iteratorNode->pid == PID) {
+//                 printf("Returning Node with PID = %d\n", PID);
+//                 return iteratorNode;
+//             }
+//             iteratorNode = iteratorNode->next;
+//         }
+//     }
+//     return NULL;
+// }
 
 /**
  * Function that counts total number of nodes present in LL.
@@ -173,12 +173,6 @@ int bgcount() {
     printf("Total background jobs: %d\n", counter);
     return counter;
 }
-
-// char* getPath(pid_t PID) {
-//     node* myNode = getNode(PID);
-
-//     return myNode;
-// }
 
 /**
  * Function to read the stat file for a given PID filepath off of the /proc directory
@@ -357,34 +351,15 @@ void readStatusFile(char* procPath) {
  */
 void pstat(pid_t PID) {
     if(nodeExists(PID)) {
-        node* processNode = getNode(PID);
+        
         char status[200];
-
         char stat[200];
         sprintf(stat, "/proc/%d/stat", PID);
         sprintf(status, "/proc/%d/status", PID);
 
-        //printf("stat = %s\n", stat);
-        //printf("status = %s\n",status);
-
-        char* fileContents[200];
-        //FILE* statFile = fopen(stat, "r");
-        //FILE* statusFile = fopen(status, "r");
-        char* statData[128];
-        char* statusData[128];
-
-        //statData[127] = readStatFile(stat);
-        //statusData[127] = *readStatusFile(status);
-        
         readStatFile(stat);
         readStatusFile(status);
 
-        //printf("%s\n", statData);
-
-        //printf("here\n");
-        //printf("comm: \t%s\n", statData[1]);
-        //printf("%s\n", statusData[1]);
-        //printf("\n");
     } else {
         printf("Invalid PID\n");
     }
@@ -489,7 +464,6 @@ void inputHandler() {
         }
 
     }else if(strcmp(token, "pstat") == 0) {
-        printf("read pstat\n");
         token = strtok(NULL, " ");
         if(token == NULL) {
             printf("Please enter a valid PID\n");
