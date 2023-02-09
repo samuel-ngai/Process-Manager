@@ -415,14 +415,11 @@ char** readStatusFile(char* procPath) {
 
     for(int i = 0; i<41; i++) {
 
-        if(i == 1) {
-            printf("comm: %s\n", data);
+        if(i == 39) {
+            printf("voluntary context switches: %s\n", data);
         }
-        if(i == 2) {
-            printf("state: %s\n", data);
-        }
-        if(i == 23) {
-            printf("rss: %s\n", data);
+        if( i == 40) {
+            printf("nonvoluntary context switches: %s\n", data);
         }
         data = strtok(NULL, " ");
     }
