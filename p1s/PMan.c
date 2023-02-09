@@ -271,9 +271,11 @@ char* readStatFile(char* procPath) {
         }
         if(i == 12) {
             utime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK); 
+            printf("utime: %s\n", utime);
         }
         if(i == 13) {
-            utime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK); 
+            stime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK); 
+            printf("stime: %s\n", stime);
         }
         if(i == 23) {
             printf("rss: %s\n", data);
