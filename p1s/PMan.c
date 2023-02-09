@@ -269,13 +269,13 @@ char* readStatFile(char* procPath) {
         if(i == 2) {
             printf("state: %s\n", data);
         }
-        if(i == 12) {
+        if(i == 13) {
             //utime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK); 
             utime = (int)data/sysconf(_SC_CLK_TCK);
             printf("utime: %s\n", utime);
             printf("utime without conversion: %s\n", data);
         }
-        if(i == 13) {
+        if(i == 14) {
             //stime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK); 
             stime = (int)data/sysconf(_SC_CLK_TCK);
             printf("stime: %s\n", stime);
