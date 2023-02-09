@@ -266,7 +266,7 @@ char* readStatFile(char* procPath) {
         if(i == 2) {
             printf("state: %s\n", data);
         }
-        if(i == 24) {
+        if(i == 23) {
             printf("rss; %s\n", data);
         }
         data = strtok(NULL, " ");
