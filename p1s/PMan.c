@@ -186,7 +186,7 @@ int bgcount() {
 char* readStatFile(char* procPath) {
 
     printf("stat path is %s\n", procPath);
-    char* data[128];
+    //char* data[128];
     FILE* statFile = fopen(procPath, "r");
     char fileContents[1024];
     int iterator = 0;
@@ -234,21 +234,26 @@ char* readStatFile(char* procPath) {
        printf("Failed to access file\n");
    } 
    int i = 0;
+    char data[52];
    while((read = getline(&line, &len, statFile)) != NULL) {
-       if(i == 0) {
-           printf("comm: %s\n", line[1]);
-       }
-       if(i == 1) {
-           printf("state = %s\n", line[2]);
-       }
-       if(i == 24) {
-           printf("rss: %s\n", line[24]);
-           break;
-       }
+    //    if(i == 0) {
+    //        printf("comm: %s\n", line);
+    //    }
+    //    if(i == 1) {
+    //        printf("state = %s\n", line);
+    //    }
+    //    if(i == 24) {
+    //        printf("rss: %s\n", line);
+    //        break;
+    //    }
+        strcat(data, line);
        i++;
    }
+   printf("comm: %s\n", data[1]);
+   printf("state: %s\n", data[2]);
+   printf("rss: %s\n", data[24]);
  
-    printf("%s\n", line);
+    //printf("%s\n", line);
     fclose(statFile);
     
     // if(statFile != NULL) {
