@@ -156,29 +156,26 @@ int bgcount() {
 
 /**
  * Function to read the stat file for a given PID filepath off of the /proc directory
+ * prints out:
+ *  - comm
+ *  - state
+ *  - utime
+ *  - stime
+ *  - rss
  */
 void readStatFile(char* procPath) {
 
-    FILE* statFile = fopen(procPath, "r");
-    char fileContents[1024];
-    int iterator = 0;
-
-    int unused;
-    char comm[1000];
-    char state;
-    int ppid; 
-    long unsigned int value;
-    long rss;
-   
+    FILE* statFile = fopen(procPath, "r");   
     ssize_t read;
     ssize_t len = 0;
     char* line = NULL;
     char* data = NULL;
+
     if(statFile == NULL) {
         printf("Failed to access file\n");
+        return;
     } 
     int i = 0;
-        //char data[52];
     while((read = getline(&line, &len, statFile)) != NULL) {
 
         if(i == 1) {
@@ -186,14 +183,8 @@ void readStatFile(char* procPath) {
             break;
         }
         i++;
-
     }
-
-    float utime;
-    float stime;
-    char* stuff;
     for(int i = 0; i<25; i++) {
-
         if(i == 1) {
             printf("comm: %s\n", data);
         }
@@ -201,15 +192,9 @@ void readStatFile(char* procPath) {
             printf("state: %s\n", data);
         }
         if(i == 13) {
-            //utime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK); 
-            //utime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK);
-            
-            //data = data/sysconf(_SC_CLK_TCK);
             printf("utime: %s\n", data);
         }
         if(i == 14) {
-            //stime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK); 
-            //stime = strtoul(data, &stuff, 10)/sysconf(_SC_CLK_TCK);
             printf("stime: %s\n", data);
         }
         if(i == 23) {
@@ -217,46 +202,37 @@ void readStatFile(char* procPath) {
         }
         data = strtok(NULL, " ");
     }
-
     fclose(statFile);
-    
 }
+
 /**
  * Function to read the status file for a given PID filepath off of the /proc directory
+ * prints out:
+ *  - voluntary context switches
+ *  - nonvoluntary context switches
  */
 void readStatusFile(char* procPath) {
 
     FILE* statusFile = fopen(procPath, "r");
-    char fileContents[1024];
-
-   
-
     ssize_t read;
-   ssize_t len = 0;
+    ssize_t len = 0;
     char* line = NULL;
-    char* data = NULL;
-   if(statusFile == NULL) {
-       printf("Failed to access file\n");
-   } 
-   int i = 0;
-    //char data[52];
-   while((read = getline(&line, &len, statusFile)) != NULL) {
-    
+    if(statusFile == NULL) {
+        printf("Failed to access file\n");
+    } 
+    int i = 0;
+        //char data[52];
+    while((read = getline(&line, &len, statusFile)) != NULL) {
         if(i == 53) {
             printf("%s", line);
         }
         if(i == 54) {
             printf("%s", line);
             break;
-
         }
         i++;
-
-
-   }
-    
+    }
     fclose(statusFile);
-    
 }
 
 /**
@@ -319,10 +295,10 @@ void pstat(pid_t PID) {
  * terminate and allow the user to return to their
  * normal terminal interface.
  */
-void inputHandler() {
+void inputHandler(char* input) {
 
-    char* myCommand = readline("PMan: >");
-    char* token = strtok(myCommand, " ");
+    //char* myCommand = readline("PMan: >");
+    char* token = strtok(input, " ");
     char* commands[10];
 
     //TODO
@@ -430,27 +406,6 @@ void inputHandler() {
  */
 void updateStatus() {
     
-    // for(;;) {
-    //     int status;
-    //     pid_t PID = waitpid(-1, &status, WCONTINUED | WNOHANG | WUNTRACED);
-    //     if(PID > 0) {
-    //         if(WIFCONTINUED(status)) {
-    //             printf("Child process %d  was resumed by delivery of SIGCONT\n", PID);
-    //             setRunning(PID, 1);
-    //         } else if(WIFSTOPPED(status)) {
-    //             printf("Child process %d was stopped by delivery of a signal\n", PID);
-    //             setRunning(PID, 0);
-    //         } else if(WIFSIGNALED(status)) {
-    //             printf("Child process %d was terminated by a signal\n", PID);
-    //             removeNode(PID);
-    //         } else if(WIFEXITED(status)) {
-    //             printf("Child process %d terminated normally\n", PID);
-    //             removeNode(PID);
-    //         }
-    //     } else {
-    //         return;
-    //     }
-    // }
     int status;
     pid_t PID = waitpid(-1, &status, WCONTINUED | WNOHANG | WUNTRACED);
     if(PID > 0) {
@@ -487,9 +442,12 @@ int
 main(int argc, char* argv[])
 {
     for(;;) {
-        updateStatus();
-        usleep(10000);
-        inputHandler();
+        char* myCommand = readline("PMan: >");
+        if(strcmp(myCommand, "") == 0) {
+            printf("No input given\n");
+        } else {
+            inputHandler(myCommand);
+        }
         usleep(10000);
         updateStatus();
     }
