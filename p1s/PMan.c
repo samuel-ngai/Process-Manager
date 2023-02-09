@@ -250,9 +250,11 @@ char* readStatFile(char* procPath) {
         strcat(data, line);
        i++;
    }
-   printf("comm: %s\n", data[1]);
-   printf("state: %s\n", data[2]);
-   printf("rss: %s\n", data[24]);
+   printf("hahahaha\n");
+   printf("%s\n", data);
+//    printf("comm: %s\n", data[1]);
+//    printf("state: %s\n", data[2]);
+//    printf("rss: %s\n", data[24]);
  
     //printf("%s\n", line);
     fclose(statFile);
