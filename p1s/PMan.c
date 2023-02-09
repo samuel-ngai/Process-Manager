@@ -183,7 +183,7 @@ int bgcount() {
 /**
  * Function to read the stat file for a given PID filepath off of the /proc directory
  */
-char* readStatFile(char* procPath) {
+void readStatFile(char* procPath) {
 
     printf("stat path is %s\n", procPath);
     //char* data[128];
@@ -320,12 +320,12 @@ char* readStatFile(char* procPath) {
     // }
     // printf("\n");
 
-    return *data;
+    //return *data;
 }
 /**
  * Function to read the status file for a given PID filepath off of the /proc directory
  */
-char** readStatusFile(char* procPath) {
+void readStatusFile(char* procPath) {
 
     printf("status path is %s\n", procPath);
     //char** data[128];
@@ -455,7 +455,7 @@ char** readStatusFile(char* procPath) {
 
     
     // //printf("%s", data[1]);
-    return *data;
+    //return *data;
 }
 
 /**
