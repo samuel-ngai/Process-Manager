@@ -11,4 +11,6 @@ run: PMan
 	./PMan
 
 clean: 
-	rm -f PMan
+	rm -rf PMan
+
+.PHONY: all run clean
