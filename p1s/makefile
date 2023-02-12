@@ -13,4 +13,3 @@ run: PMan
 clean: 
 	rm -rf PMan
 
-.PHONY: all run clean

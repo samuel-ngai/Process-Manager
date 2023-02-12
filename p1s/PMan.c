@@ -7,6 +7,7 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <limits.h>
 
 #define TRUE 1;
 #define FALSE 0;
@@ -55,11 +56,16 @@ void addNode(pid_t PID, char* command) {
 void printList() {
 
     node* iteratorNode = head;
-
+    //char* actualPath[128];
+    char actualPath[128];
+    // if(head == NULL) {
+    //     printf("head is null\n");
+    //     return;
+    // }
+    //printf("head is not  null\n");
     while(iteratorNode != NULL) {
-        char* actualPath[128];
-        realpath(iteratorNode->command, *actualPath);
-        printf("%d: %s\n", iteratorNode->pid, *actualPath);
+        realpath(iteratorNode->command, actualPath);
+        printf("%d: %s\n", iteratorNode->pid, actualPath);
         iteratorNode = iteratorNode->next;
     }
 }
