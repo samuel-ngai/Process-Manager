@@ -11,5 +11,5 @@ run: PMan
 	./PMan
 
 clean: 
-	rm -rf PMan
+	rm -f PMan
 
