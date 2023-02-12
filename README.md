@@ -16,10 +16,10 @@ Supported commands:
 
 The exit command is a custom command, not specified by the assignment writeup.
 
-Using command "*make clean*" will remove the PMan executable from our directory
+Using command "*make clean*" will remove the PMan executable from our directory.
 
 ## Usage
-To execute a program in the background, type in "bg (Executable)". If the executable accepts  arguments, then arguments can also be inputted by "bg (Executable) (Arguments)"
+To execute a program in the background, type in "bg (Executable)". If the executable accepts  arguments, then arguments can also be inputted by "bg (Executable) (Arguments)".
 
 ### Other command descriptions:
 
