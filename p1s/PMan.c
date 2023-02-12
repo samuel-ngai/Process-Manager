@@ -57,7 +57,7 @@ void printList() {
     node* iteratorNode = head;
 
     while(iteratorNode != NULL) {
-        char* actualPath[200];
+        char* actualPath[128];
         realpath(iteratorNode->command, *actualPath);
         printf("%d: %s\n", iteratorNode->pid, *actualPath);
         iteratorNode = iteratorNode->next;
