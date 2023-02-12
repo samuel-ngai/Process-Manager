@@ -56,13 +56,7 @@ void addNode(pid_t PID, char* command) {
 void printList() {
 
     node* iteratorNode = head;
-    //char* actualPath[128];
     char actualPath[128];
-    // if(head == NULL) {
-    //     printf("head is null\n");
-    //     return;
-    // }
-    //printf("head is not  null\n");
     while(iteratorNode != NULL) {
         realpath(iteratorNode->command, actualPath);
         printf("%d: %s\n", iteratorNode->pid, actualPath);
